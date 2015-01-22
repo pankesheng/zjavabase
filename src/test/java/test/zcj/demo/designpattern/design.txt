@@ -1,0 +1,83 @@
+			
+Dynamic_Proxy:“动态代理”设计模式,		
+	UserMgr mgr = new UserMgrImpl();	//new UserMgrImpl对象
+	InvocationHandler h = new TransactionHandler(mgr);	//new TransactionHandler对象(针对UserMgrImpl对象的操作)
+	UserMgr u = (UserMgr)Proxy.newProxyInstance(UserMgr.class,h);	//生成UserMgr的代理
+	u.addUser();
+
+ChainOfResponsibility_Filter_Interceptor:“责任链”设计模式,
+
+Facade:“门面”设计模式,
+		当类关系调来调去时，另建一个门面类，让门面类理清所有类的关系，我再调用这个门面类。
+		Struts2中的Action，一个Action类里写多个Action方法，这个Action就是一个门面。
+
+Adapter:“适配器”设计模式,
+		当110V电压的电器用在220V电压的电源时，需要在电器里加个电压转换适配器，把220V的电压转换成110V。
+		JDBC-ODBC-Bridge
+		Java.io.InputStreamReader
+		
+		class ReversibleArrayList<T> extends ArrayList<T> {
+		  public ReversibleArrayList (Collection<T> c) {
+		  	super(c);
+		  }
+		  public Iterable<T> reversed() {
+		    return new Iterable<T>() {
+		      public Iterator<T> iterator() {
+			  	return new Iterator<T>() {
+			  	  int current = size()-1;
+			  	  public boolean hasNext() {return current > -1;}
+			  	  public T next(){return get(current--);}
+			  	};
+			  }
+			};
+		  }
+		}
+		public class AdapterMethodIdiom {
+		  public static void main(String[] args) {
+		    ReversibleArrayList<String> ral = new ReversibleArrayList<String>(Arrays.asList("To be".split(" ")));
+		    for(String s : ral){System.out.println(s + " ");}
+		    for(String s : ral.reversed()){System.out.println(s + " ");}
+		  }
+		}
+			
+
+单一职责原则
+	不要存在多于一个导致类变更的原因。
+
+里氏替换原则
+	子类可以扩展父类的功能，但不能改变父类原有的功能。
+	子类方法的形参要比父类的宽松，子类方法的返回值要比父类严格。
+	通俗点讲，父类替换为子类不会产生任何错误或异常。
+	
+依赖倒置原则
+	高层模块依赖低层模块==>低层模块依赖抽象+高层模块依赖其抽象。
+	核心：面向接口编程。
+	传递依赖关系有三种方式：接口传递、构造方法传递、setter方法传递。
+	
+接口隔离原则
+	不要定义一个有很多方法的接口，然后让多个类去实现，这样的话会导致实现类必须要实现自己不需要的方法，建议对接口进行拆分成多个接口。
+
+迪米特法则
+	最少知识原则。一个对象应当对其他对象有尽可能少的了解。
+	例子：设计模式的门面模式（Facade）和中介模式（Mediator）
+	
+开闭原则
+	对扩展开放，对修改关闭。用抽象构建框架，用实现扩展细节。
+	
+类的关系
+	1、依赖(------>)：类A当中使用了类B，其中类B是作为类A的“方法参数”、“方法中的局部变量”、或者“静态方法调用”。
+		public class People{
+		     public void read(Book book){//Book作为read方法的形参
+		        System.out.println(book.getName());
+		    }
+		}
+	2、关联(——————>)：类A当中使用了类B，其中类B是作为类A的“成员变量”。
+		public class Father{
+		    Son son = new Son();
+		    public void giveGift(){
+		        System.out.println(son.getName());
+		    }
+		}
+	3、聚合、组合
+	4、继承(————————|>)、实现(--------|>)
+	

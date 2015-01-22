@@ -1,0 +1,9 @@
+
+
+//-----------------------------------------依赖注入IOC、控制反转DI----------------------------------------------------
+//1、定义一个BeanFactory接口，提供getBean方法
+//2、编写一个PropertiesBeanFactory类，实现getBean方法，同时提供构造方法用于读取配置文件里的所有bean
+//3、在web.xml里配置InitBeanFactoryServlet
+//4、编写InitBeanFactoryServlet，根据web.xml里的配置读取文件，构造PropertiesBeanFactory对象放入ServletContext中
+//5、编写BaseServlet，在ServletContext中拿出需要用的bean，利用反射，将依赖对象articleDao注入到ArticleServlet中
+//-------------------------------------------------------------------------------------------------------------------
