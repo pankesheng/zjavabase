@@ -18,6 +18,8 @@ public class SystemContextInterceptor implements HandlerInterceptor {
 	private String pagesizeKey = "pagesize";
 	private int defaultPagesize = 15;
 	private String contentType = "text/html;charset=utf-8";
+	
+	private boolean iframeCrossDomain;// 是否支持iframe嵌入跨域
 
 	@Override
 	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3) throws Exception {
@@ -38,6 +40,10 @@ public class SystemContextInterceptor implements HandlerInterceptor {
 		SystemContext.setOffset(getOffset(arg0));
 		SystemContext.setPagesize(getPagesize(arg0));
 		arg1.setContentType(contentType);
+		
+		if (iframeCrossDomain) {
+			arg1.setHeader("P3P","CP='IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT'");
+		}
 		
 		return true;
 	}
@@ -80,6 +86,14 @@ public class SystemContextInterceptor implements HandlerInterceptor {
 
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+	}
+
+	public boolean isIframeCrossDomain() {
+		return iframeCrossDomain;
+	}
+
+	public void setIframeCrossDomain(boolean iframeCrossDomain) {
+		this.iframeCrossDomain = iframeCrossDomain;
 	}
 
 	public int getDefaultPagesize() {
