@@ -17,6 +17,11 @@ public class UtilJdbc {
 	public static String DATABASETYPE_MYSQL = "mysql";
 	public static String DATABASETYPE_ORACLE = "oracle";
 	
+	public static void main(String[] args) {
+		String result = query(DATABASETYPE_SQLSERVER, "10.131.2.10", 1433, "ohedu", "ohedu", "McKHeUIXqhwxUBVQWPRw48uiAZSDRT<", "select count(*) from zt_TopicArticle");
+		System.out.println(result);
+	}
+	
 	/**
 	 * 
 	 * @param databaseType UtilJdbc.DATABASETYPE_SQLSERVER

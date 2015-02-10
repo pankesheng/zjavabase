@@ -241,5 +241,13 @@
 			<version>3.3</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.database</groupId>
+			<artifactId>sqlserver</artifactId>
+			<version>0.0.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/sqljdbc4.jar</systemPath>
+		</dependency>
+		
 	</dependencies>
 </project>

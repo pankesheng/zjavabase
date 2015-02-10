@@ -59,9 +59,9 @@ public class UtilSecurity {
 
     public static void main(String[] args) {
         try {
-            String pwd = UtilSecurity.encryptMessage("发送方");
+            String pwd = UtilSecurity.encryptMessage("2");
             System.out.println(pwd);
-            String rs = UtilSecurity.decryptMessage("U4y2vTvvngxKQe3JseFqFg==");
+            String rs = UtilSecurity.decryptMessage("Jbk1T6deXUI=");
             System.out.println(rs);
         } catch (Exception e) {
             e.printStackTrace();
