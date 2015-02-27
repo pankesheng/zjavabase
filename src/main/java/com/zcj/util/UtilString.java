@@ -24,7 +24,7 @@ public class UtilString {
 	public static Long getLongUUID() {
 		return WORKER.nextId();
 	}
-	
+
 	/** 通过MD5加密 */
 	public static String getMd5(String str) {
 		return UtilEncryption.toMD5(str);
@@ -47,7 +47,7 @@ public class UtilString {
 		int tmp = UtilString.getRandom(100000, 999999);
 		return time + tmp;
 	}
-	
+
 	/** 提取字符串中的数字 */
 	public static String getNumeric(String value) {
 		if (StringUtils.isBlank(value)) {
@@ -74,39 +74,40 @@ public class UtilString {
 	public static boolean CheckIDCard(String idcard) {
 		return ValidatorIdcard.isValidatedAllIdcard(idcard);
 	}
-	
+
 	/** 验证是否为IP地址 */
 	public static boolean isIp(String ip) {
 		return ValidatorIP.isIp(ip);
 	}
-	
+
 	/** 验证ip是否在ipMap(key~value)区间中 */
 	public static boolean isIpInner(String ip, Map<String, String> ipMap) {
 		return ValidatorIP.isIPInner(ip, ipMap);
 	}
-	
+
 	/** 验证是否为邮箱地址 */
 	public static boolean isEmail(String email) {
 		if (StringUtils.isBlank(email)) {
 			return false;
 		}
-		Pattern pattern = Pattern.compile("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
+		Pattern pattern = Pattern
+				.compile("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
 		Matcher matcher = pattern.matcher(email);
 		return matcher.matches();
 	}
-	
+
 	/** 判断字符串格式是否正确，且字节数必须小于某值，且不能为空，且只能是数字、字母、下划线、中文 */
 	public static boolean lengthVerify(String value, int length) {
 		if (StringUtils.isBlank(value)) {
 			return false;
 		}
-		
+
 		char[] vs = value.toCharArray();
 		int lenght = 0;
-		
+
 		Pattern pattern = Pattern.compile("^[\\u4e00-\\u9fa5]{1}$");
 		Pattern pattern2 = Pattern.compile("^[\\dA-Za-z_]{1}$");
-		
+
 		for (char v : vs) {
 			Matcher matcher = pattern.matcher(String.valueOf(v));
 			Matcher matcher2 = pattern2.matcher(String.valueOf(v));
@@ -118,17 +119,17 @@ public class UtilString {
 				return false;
 			}
 		}
-		
+
 		return (lenght <= length);
 	}
-	
+
 	/**
 	 * 移除原字符串中的某元素 UtilString.rejectElem("a,b,c","b")="a,c"
 	 */
 	public static String rejectElem(String src, String elem) {
 		return rejectElem(src, elem, ",");
 	}
-	
+
 	/**
 	 * 移除原字符串中的某元素 UtilString.rejectElem("a,b,c","b")="a,c"
 	 */
@@ -136,11 +137,11 @@ public class UtilString {
 		if (StringUtils.isBlank(src) || StringUtils.isBlank(elem)) {
 			return src;
 		}
-		String temp = (splite+src+splite).replace(splite+elem+splite, splite);
+		String temp = (splite + src + splite).replace(splite + elem + splite, splite);
 		temp = temp.substring(1, temp.length() > 1 ? temp.length() - 1 : 1);
 		return temp;
 	}
-	
+
 	/**
 	 * 把字符串中的某元素置顶 UtilString.topElem("a,b,c","b")="b,a,c"
 	 */
@@ -279,6 +280,21 @@ public class UtilString {
 			return str;
 		}
 		return str.substring(0, length);
+	}
+	
+	/** 首字母小写 */
+	public static String firstLower(String str) {
+		if (StringUtils.isBlank(str)) {
+			return str;
+		}
+		char[] chars = new char[1];
+		chars[0] = str.charAt(0);
+		String temp = new String(chars);
+		if (chars[0] >= 'A' && chars[0] <= 'Z') {
+			return str.replaceFirst(temp, temp.toLowerCase());
+		} else {
+			return str;
+		}
 	}
 
 }
