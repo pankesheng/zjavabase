@@ -18,6 +18,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
+import com.zcj.util.filenameutils.FilenameUtils;
+
 /**
  * 该类实现了基于模板的导出<br/>
  * 序号：标识sernums<br/>
@@ -107,6 +109,10 @@ public class ExcelTemplate {
 	 *            例：D:/dome.xsl
 	 */
 	public void writeToFile(String filepath) {
+		File dir = new File(FilenameUtils.getFullPathNoEndSeparator(filepath));
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(filepath);

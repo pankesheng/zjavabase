@@ -53,7 +53,6 @@ public class ExcelUtil {
 	/**
 	 * 基于模板的绝对路径，导出Excel到输出流中
 	 * 
-	 * @deprecated
 	 * @param datas
 	 *            模板中的替换的常量数据<br/>
 	 *            例：<br/>
