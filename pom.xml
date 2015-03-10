@@ -12,6 +12,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<org.springframework.version>4.0.6.RELEASE</org.springframework.version>
 	</properties>
 
 	<build>
@@ -169,21 +170,37 @@
 		</dependency>
 
 		<!-- com.zcj.web.springmvc -->
-
+		<!-- com.zcj.util.freemarker -->
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>4.0.6.RELEASE</version>
+			<artifactId>spring-core</artifactId>
+			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>4.0.6.RELEASE</version>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.0.6.RELEASE</version>
+			<version>${org.springframework.version}</version>
 		</dependency>
 
 		<!-- com.zcj.web.mybatis.mapper -->
