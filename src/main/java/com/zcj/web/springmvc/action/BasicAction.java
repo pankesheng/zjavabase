@@ -34,7 +34,7 @@ public class BasicAction {
 				try {
 					date = format.parse(text);
 				} catch (ParseException e1) {
-					e1.printStackTrace();
+					// e1.printStackTrace();
 				}
 			}
 			setValue(date);
