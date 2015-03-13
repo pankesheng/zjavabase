@@ -8,6 +8,11 @@ import org.apache.commons.io.IOUtils;
 
 import freemarker.cache.TemplateLoader;
 
+/**
+ * 处理输出时的HTML数据
+ * @author zouchongjin@sina.com
+ * @data 2015年3月13日
+ */
 public class HtmlTemplateLoader implements TemplateLoader {
 
 	private static final String HTML_ESCAPE_PREFIX = "<#escape x as x?html>";
