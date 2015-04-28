@@ -14,6 +14,12 @@ public class UtilMath {
 	}
 	
 	/** 计算百分比 */
+	public static String percent(Long value, Long full) {
+		if (full == 0 || value < 0 || full <= 0) {return null;}
+		return percent(Double.valueOf(value), Double.valueOf(full));
+	}
+	
+	/** 计算百分比 */
 	public static String percent(Double value, Double full) {
 		if (value == null || full == null) {
 			return null;

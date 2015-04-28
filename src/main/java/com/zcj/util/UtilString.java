@@ -14,11 +14,27 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 
 public class UtilString {
 
 	public static final IdWorker WORKER = new IdWorker(8);
+	
+	public static boolean isNotBlank(String str) {
+		return !UtilString.isBlank(str);
+	}
+
+	public static boolean isBlank(String str) {
+		int strLen;
+		if (str == null || (strLen = str.length()) == 0) {
+			return true;
+		}
+		for (int i = 0; i < strLen; i++) {
+			if ((Character.isWhitespace(str.charAt(i)) == false)) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	/** 获取一个15位的唯一标识 */
 	public static Long getLongUUID() {
@@ -50,7 +66,7 @@ public class UtilString {
 
 	/** 提取字符串中的数字 */
 	public static String getNumeric(String value) {
-		if (StringUtils.isBlank(value)) {
+		if (isBlank(value)) {
 			return "";
 		}
 		String regEx = "[^0-9]";
@@ -87,18 +103,47 @@ public class UtilString {
 
 	/** 验证是否为邮箱地址 */
 	public static boolean isEmail(String email) {
-		if (StringUtils.isBlank(email)) {
+		if(email == null || email.trim().length()==0) 
+			return false;
+		Pattern pattern = Pattern.compile("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$");
+		return pattern.matcher(email).matches();
+	}
+	
+	/** 验证是否为手机号码 */
+	public static boolean isPhone(String phone) {
+		try {
+			if (!phone.substring(0, 1).equals("1")) {
+				return false;
+			}
+			if (phone == null || phone.length() != 11) {
+				return false;
+			}
+			String check = "^[0123456789]+$";
+			Pattern regex = Pattern.compile(check);
+			Matcher matcher = regex.matcher(phone);
+			boolean isMatched = matcher.matches();
+			if (isMatched) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (RuntimeException e) {
 			return false;
 		}
-		Pattern pattern = Pattern
-				.compile("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
-		Matcher matcher = pattern.matcher(email);
-		return matcher.matches();
+	}
+	
+	/** 隐藏手机号码的中间四位 */
+	public static String hidePhone(String sPhone) {
+		if (sPhone.length() == 11) {
+			return sPhone = sPhone.subSequence(0, 3) + "****" + sPhone.subSequence(7, 11);
+		} else {
+			return "****";
+		}
 	}
 
 	/** 判断字符串格式是否正确，且字节数必须小于某值，且不能为空，且只能是数字、字母、下划线、中文 */
 	public static boolean lengthVerify(String value, int length) {
-		if (StringUtils.isBlank(value)) {
+		if (isBlank(value)) {
 			return false;
 		}
 
@@ -134,7 +179,7 @@ public class UtilString {
 	 * 移除原字符串中的某元素 UtilString.rejectElem("a,b,c","b")="a,c"
 	 */
 	public static String rejectElem(String src, String elem, String splite) {
-		if (StringUtils.isBlank(src) || StringUtils.isBlank(elem)) {
+		if (isBlank(src) || isBlank(elem)) {
 			return src;
 		}
 		String temp = (splite + src + splite).replace(splite + elem + splite, splite);
@@ -146,11 +191,11 @@ public class UtilString {
 	 * 把字符串中的某元素置顶 UtilString.topElem("a,b,c","b")="b,a,c"
 	 */
 	public static String topElem(String src, String elem) {
-		if (StringUtils.isBlank(src) || StringUtils.isBlank(elem) || !src.contains(elem)) {
+		if (isBlank(src) || isBlank(elem) || !src.contains(elem)) {
 			return src;
 		}
 		String temp = rejectElem(src, elem);
-		if (StringUtils.isBlank(temp)) {
+		if (isBlank(temp)) {
 			return elem;
 		} else {
 			temp = elem + "," + temp;
@@ -181,7 +226,7 @@ public class UtilString {
 
 	/** 逗号分隔的字符串转换成List格式 */
 	public static List<String> stringToList(String value) {
-		if (StringUtils.isBlank(value)) {
+		if (isBlank(value)) {
 			return new ArrayList<String>();
 		} else {
 			return Arrays.asList(value.split(","));
@@ -273,7 +318,7 @@ public class UtilString {
 
 	/** 截取字符串 */
 	public static String subString(String str, int length) {
-		if (StringUtils.isBlank(str)) {
+		if (isBlank(str)) {
 			return "";
 		}
 		if (str.length() <= length) {
@@ -284,7 +329,7 @@ public class UtilString {
 	
 	/** 首字母小写 */
 	public static String firstLower(String str) {
-		if (StringUtils.isBlank(str)) {
+		if (isBlank(str)) {
 			return str;
 		}
 		char[] chars = new char[1];
