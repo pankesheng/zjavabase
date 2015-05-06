@@ -6,19 +6,23 @@ import java.util.Collections;
 import java.util.List;
 
 public class UtilMath {
-	
+
 	/** 计算百分比 */
 	public static String percent(int value, int full) {
-		if (full == 0 || value < 0 || full <= 0) {return null;}
+		if (full == 0 || value < 0 || full <= 0) {
+			return null;
+		}
 		return percent(Double.valueOf(value), Double.valueOf(full));
 	}
-	
+
 	/** 计算百分比 */
 	public static String percent(Long value, Long full) {
-		if (full == 0 || value < 0 || full <= 0) {return null;}
+		if (full == 0 || value < 0 || full <= 0) {
+			return null;
+		}
 		return percent(Double.valueOf(value), Double.valueOf(full));
 	}
-	
+
 	/** 计算百分比 */
 	public static String percent(Double value, Double full) {
 		if (value == null || full == null) {
@@ -39,10 +43,12 @@ public class UtilMath {
 			return null;
 		}
 		Double sum = sumValue(array);
-		if (sum == null) {return null;}
+		if (sum == null) {
+			return null;
+		}
 		return sum / array.length;
 	}
-	
+
 	/** 计算总分 */
 	public static Double sumValue(Double[] array) {
 		if (array == null || array.length == 0) {
@@ -93,7 +99,9 @@ public class UtilMath {
 			return null;
 		}
 		Double avg = avgValue(values);
-		if (avg == null) {return null;}
+		if (avg == null) {
+			return null;
+		}
 
 		double sum = 0D;
 		for (int i = 0; i < values.length; i++) {
@@ -102,14 +110,16 @@ public class UtilMath {
 		sum /= values.length;
 		return sum;
 	}
-	
+
 	/** 计算标准差 */
 	public static Double standardDeviation(Double[] values) {
 		if (values == null || values.length == 0) {
 			return null;
 		}
 		Double variance = variance(values);
-		if (variance == null) {return null;}
+		if (variance == null) {
+			return null;
+		}
 		return Math.sqrt(variance);
 	}
 
@@ -120,28 +130,36 @@ public class UtilMath {
 		}
 		Double[] s = new Double[myValues.length];
 		Double scoreMean = avgValue(all);
-		if (scoreMean == null) {return null;}
+		if (scoreMean == null) {
+			return null;
+		}
 		Double standardDeviation = standardDeviation(all);
-		if (standardDeviation == null || standardDeviation == 0) {return null;}
+		if (standardDeviation == null || standardDeviation == 0) {
+			return null;
+		}
 		for (int i = 0; i < myValues.length; i++) {
 			s[i] = (myValues[i] - scoreMean) / standardDeviation;
 		}
 		return s;
 	}
-	
+
 	/** 计算T总分均值（初中：70+15*标准分；小学：80+10*标准分） */
 	public static Double tAvgValue(Double[] all, Double[] myValues, String type) {
 		if (all == null || all.length == 0 || myValues == null || myValues.length == 0 || all.length < myValues.length) {
 			return null;
 		}
 		Double[] s = standardScore(all, myValues);
-		if (s == null) {return null;}
+		if (s == null) {
+			return null;
+		}
 		Double avg = avgValue(s);
-		if (avg == null) {return null;}
+		if (avg == null) {
+			return null;
+		}
 		if ("初中".equals(type)) {
-			return 15*avg + 70D;
+			return 15 * avg + 70D;
 		} else if ("小学".equals(type)) {
-			return 10*avg + 80D;
+			return 10 * avg + 80D;
 		} else {
 			return null;
 		}
@@ -154,12 +172,12 @@ public class UtilMath {
 		}
 		return avg / full;
 	}
-	
+
 	/** 计算满分数 */
 	public static int fullCount(Double[] arrays, Double full) {
 		int result = 0;
 		if (arrays != null && arrays.length > 0 && full != null && full.floatValue() > 0) {
-			for(Double s : arrays) {
+			for (Double s : arrays) {
 				if (s.floatValue() == full.floatValue()) {
 					result++;
 				}
@@ -167,7 +185,7 @@ public class UtilMath {
 		}
 		return result;
 	}
-	
+
 	/** 计算零分数 */
 	public static int zeroCount(Double[] arrays) {
 		int result = 0;
@@ -192,12 +210,40 @@ public class UtilMath {
 		Collections.sort(r);
 		Double a = avgValue(UtilString.arraySubList(r, 0, (int) (r.size() * 0.27)));
 		Double b = avgValue(UtilString.arraySubList(r, (int) (r.size() * 0.73), r.size()));
-		if (a == null || b == null) {return null;}
+		if (a == null || b == null) {
+			return null;
+		}
 		return (b - a) / full;
 	}
 
+
+	// 计算弧长
+	private static double rad(double d) {
+		return d * Math.PI / 180.0;
+	}
+
+	/**
+	 * 计算两个坐标的距离，单位米
+	 * @param lng1 第一点经度
+	 * @param lat1 第一点纬度
+	 * @param lng2 第二点经度
+	 * @param lat2 第二点纬度
+	 * @return
+	 */
+	public static double pointShortestDistance(double lng1, double lat1, double lng2, double lat2) {
+		double earth_radius = 6378.137;// 地球半径
+		double radLat1 = rad(lat1);
+		double radLat2 = rad(lat2);
+		double a = radLat1 - radLat2;
+		double b = rad(lng1) - rad(lng2);
+		double s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2)
+				* Math.pow(Math.sin(b / 2), 2)));
+		s = s * earth_radius * 1000;
+		return s;
+	}
+
 	public static void main(String[] args) {
-		System.out.println((int) 1.95);
+		System.out.println(pointShortestDistance(116.327428, 39.91923, 116.357428, 39.89923));
 	}
 
 }

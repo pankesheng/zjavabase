@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class UtilDate {
 
 	/**
@@ -25,6 +27,25 @@ public class UtilDate {
 			return new SimpleDateFormat("yyyy-MM-dd");
 		}
 	};
+
+	/** 字符串转换成时间类型 */
+	public static Date format(String value) {
+		Date date = null;
+		if (StringUtils.isNotBlank(value)) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			try {
+				date = format.parse(value);
+			} catch (ParseException e) {
+				format = new SimpleDateFormat("yyyy-MM-dd");
+				try {
+					date = format.parse(value);
+				} catch (ParseException e1) {
+					// e1.printStackTrace();
+				}
+			}
+		}
+		return date;
+	}
 
 	/**
 	 * 秒数转成00:00:00格式的字符串
@@ -114,6 +135,16 @@ public class UtilDate {
 		return cal.getTime();// 获得月末是几号
 	}
 
+	/** 获取今天的凌晨时间 */
+	@SuppressWarnings("deprecation")
+	public static Date getTodayBegin() {
+		Date d = new Date();
+		d.setHours(0);
+		d.setMinutes(0);
+		d.setSeconds(0);
+		return d;
+	}
+
 	/** 初始化一个Date类型的值 */
 	public static Date initDate(int year, int month, int date, int hourOfDay, int minute, int second) {
 		Calendar c = Calendar.getInstance();
@@ -147,6 +178,11 @@ public class UtilDate {
 	public static Date getLastDayOfThisMonth() {
 		Calendar cal = Calendar.getInstance();
 		return getLastDayOfMonth(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1);
+	}
+
+	/** 取得两个时间相差的秒数 */
+	public static float dateDiff_Sec_float(Date begin, Date end) {
+		return ((float) (end.getTime() - begin.getTime()) / 1000);
 	}
 
 	/** 取得两个时间相差的秒数 */
