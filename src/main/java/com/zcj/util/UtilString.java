@@ -18,7 +18,7 @@ import org.apache.commons.lang3.ArrayUtils;
 public class UtilString {
 
 	public static final IdWorker WORKER = new IdWorker(8);
-	
+
 	public static boolean isNotBlank(String str) {
 		return !UtilString.isBlank(str);
 	}
@@ -103,12 +103,12 @@ public class UtilString {
 
 	/** 验证是否为邮箱地址 */
 	public static boolean isEmail(String email) {
-		if(email == null || email.trim().length()==0) 
+		if (email == null || email.trim().length() == 0)
 			return false;
 		Pattern pattern = Pattern.compile("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$");
 		return pattern.matcher(email).matches();
 	}
-	
+
 	/** 验证是否为手机号码 */
 	public static boolean isPhone(String phone) {
 		try {
@@ -131,7 +131,7 @@ public class UtilString {
 			return false;
 		}
 	}
-	
+
 	/** 隐藏手机号码的中间四位 */
 	public static String hidePhone(String sPhone) {
 		if (sPhone.length() == 11) {
@@ -326,7 +326,7 @@ public class UtilString {
 		}
 		return str.substring(0, length);
 	}
-	
+
 	/** 首字母小写 */
 	public static String firstLower(String str) {
 		if (isBlank(str)) {

@@ -47,14 +47,9 @@ public class UtilDate {
 		return date;
 	}
 
-	/**
-	 * 秒数转成00:00:00格式的字符串
-	 * 
-	 * @param duration
-	 * @return
-	 */
-	public static String duration(long duration) {
-		int timetiem = (int) duration;
+	/** 秒数转成"136:25:30"格式的字符串 */
+	public static String formatToHHmmss(long theSecond) {
+		int timetiem = (int) theSecond;
 		int minute = timetiem / 60;
 		int hour = minute / 60;
 		int second = timetiem % 60;
@@ -62,8 +57,21 @@ public class UtilDate {
 		return String.format("%02d:%02d:%02d", hour, minute, second);
 	}
 
-	/** 计算从某时间开始，满足几点几分几秒星期几的最近的时间 */
-	public Calendar getEarliestDate(Calendar currentDate, int dayOfWeek, int hourOfDay, int minuteOfHour, int secondOfMinite) {
+	/**
+	 * 取得某个时间以后的满足几点几分几秒星期几的最近的时间
+	 * 
+	 * @param currentDate
+	 * @param dayOfWeek
+	 *            星期（1：星期天；2：星期一；...）
+	 * @param hourOfDay
+	 *            小时
+	 * @param minuteOfHour
+	 *            分钟
+	 * @param secondOfMinite
+	 *            秒
+	 * @return
+	 */
+	public static Calendar getLatestDate(Calendar currentDate, int dayOfWeek, int hourOfDay, int minuteOfHour, int secondOfMinite) {
 
 		int currentWeekOfYear = currentDate.get(Calendar.WEEK_OF_YEAR);
 		int currentDayOfWeek = currentDate.get(Calendar.DAY_OF_WEEK);
@@ -105,26 +113,14 @@ public class UtilDate {
 		return currentDate;
 	}
 
-	/** 对比两个时间相隔几天（过了24点就算隔一天,如果其中一个时间为null，则返回null） */
-	public static Integer contrastDate(Date time, Date lastTime) {
-		if (time == null || lastTime == null)
-			return null;
-		Calendar aCalendar = Calendar.getInstance();
-		aCalendar.setTime(lastTime);
-		int day1 = aCalendar.get(Calendar.DAY_OF_YEAR);
-		aCalendar.setTime(time);
-		int day2 = aCalendar.get(Calendar.DAY_OF_YEAR);
-		return new Integer(day2 - day1);
-	}
-
 	/** 取得某一天的几天后的日期 */
-	public static Date later(Date base, int later) {
+	public static Date getLaterDay(Date base, int later) {
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(base);
 		cal.add(Calendar.DAY_OF_MONTH, later);
 		return cal.getTime();
 	}
-
+	
 	/** 取得某年某月的最后一天 */
 	public static Date getLastDayOfMonth(int year, int month) {
 		Calendar cal = Calendar.getInstance();
@@ -134,8 +130,8 @@ public class UtilDate {
 		cal.add(Calendar.DATE, -1);// 下一个月减一为本月最后一天
 		return cal.getTime();// 获得月末是几号
 	}
-
-	/** 获取今天的凌晨时间 */
+	
+	/** 取得今天的0点0分0秒的时间 */
 	@SuppressWarnings("deprecation")
 	public static Date getTodayBegin() {
 		Date d = new Date();
@@ -143,6 +139,18 @@ public class UtilDate {
 		d.setMinutes(0);
 		d.setSeconds(0);
 		return d;
+	}
+	
+	/** 对比两个时间相隔几天（过了24点就算隔一天,如果其中一个时间为null，则返回null） */
+	public static Integer operContrastDate(Date endTime, Date beginTime) {
+		if (endTime == null || beginTime == null)
+			return null;
+		Calendar aCalendar = Calendar.getInstance();
+		aCalendar.setTime(beginTime);
+		int day1 = aCalendar.get(Calendar.DAY_OF_YEAR);
+		aCalendar.setTime(endTime);
+		int day2 = aCalendar.get(Calendar.DAY_OF_YEAR);
+		return new Integer(day2 - day1);
 	}
 
 	/** 初始化一个Date类型的值 */
@@ -152,15 +160,14 @@ public class UtilDate {
 		c.set(year, month - 1, date, hourOfDay, minute, second);
 		return c.getTime();
 	}
+	
+	
+	
+	
 
-	/** String 转 Date */
-	public static Date toDate(String date) {
-		try {
-			return SDF_DATETIME.get().parse(date);
-		} catch (ParseException e) {
-			return null;
-		}
-	}
+	
+	
+	
 
 	/** 获取只有日期的值，如果参数错误，则返回今天 */
 	public static Date initDateNoTimeByString(String date) {
@@ -275,6 +282,27 @@ public class UtilDate {
 	public static String friendly_time(String sdate) {
 		Date time = toDateTime(sdate);
 		return friendly_time(time);
+	}
+
+	/** @see #formatToHHmmss(long) */
+	@Deprecated
+	public static String duration(long duration) {
+		return formatToHHmmss(duration);
+	}
+	/** @see #operContrastDate(Date, Date) */
+	@Deprecated
+	public static Integer contrastDate(Date endTime, Date beginTime) {
+		return operContrastDate(endTime, beginTime);
+	}
+	/** @see #getLater(Date, int) */
+	@Deprecated
+	public static Date later(Date base, int later) {
+		return getLaterDay(base, later);
+	}
+	/** @see #format(String) */
+	@Deprecated
+	public static Date toDate(String date) {
+		return format(date);
 	}
 
 }
