@@ -6,8 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import org.apache.commons.lang3.StringUtils;
-
 public class UtilDate {
 
 	/**
@@ -28,10 +26,17 @@ public class UtilDate {
 		}
 	};
 
+	public static final ThreadLocal<SimpleDateFormat> SDF_TIME = new ThreadLocal<SimpleDateFormat>() {
+		@Override
+		protected SimpleDateFormat initialValue() {
+			return new SimpleDateFormat("HH:mm:ss");
+		}
+	};
+
 	/** 字符串转换成时间类型 */
 	public static Date format(String value) {
 		Date date = null;
-		if (StringUtils.isNotBlank(value)) {
+		if (UtilString.isNotBlank(value)) {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			try {
 				date = format.parse(value);
@@ -47,6 +52,11 @@ public class UtilDate {
 		return date;
 	}
 
+	/** 时间类型转换成字符串（yyyy-MM-dd HH:mm:ss） */
+	public static String format(Date value) {
+		return SDF_DATETIME.get().format(value);
+	}
+
 	/** 秒数转成"136:25:30"格式的字符串 */
 	public static String formatToHHmmss(long theSecond) {
 		int timetiem = (int) theSecond;
@@ -57,22 +67,12 @@ public class UtilDate {
 		return String.format("%02d:%02d:%02d", hour, minute, second);
 	}
 
-	/**
-	 * 取得某个时间以后的满足几点几分几秒星期几的最近的时间
-	 * 
-	 * @param currentDate
-	 * @param dayOfWeek
-	 *            星期（1：星期天；2：星期一；...）
-	 * @param hourOfDay
-	 *            小时
-	 * @param minuteOfHour
-	 *            分钟
-	 * @param secondOfMinite
-	 *            秒
-	 * @return
-	 */
-	public static Calendar getLatestDate(Calendar currentDate, int dayOfWeek, int hourOfDay, int minuteOfHour, int secondOfMinite) {
-
+	/** 取得某个时间以后的满足几点几分几秒星期几的最近的时间(dayOfWeek[1：星期天；2：星期一；...]) */
+	public static Date getLatestDate(Date d, int dayOfWeek, int hourOfDay, int minuteOfHour, int secondOfMinite) {
+		Calendar currentDate = Calendar.getInstance();
+		if (d != null) {
+			currentDate.setTime(d);
+		}
 		int currentWeekOfYear = currentDate.get(Calendar.WEEK_OF_YEAR);
 		int currentDayOfWeek = currentDate.get(Calendar.DAY_OF_WEEK);
 		int currentHour = currentDate.get(Calendar.HOUR_OF_DAY);
@@ -110,7 +110,7 @@ public class UtilDate {
 		currentDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
 		currentDate.set(Calendar.MINUTE, minuteOfHour);
 		currentDate.set(Calendar.SECOND, secondOfMinite);
-		return currentDate;
+		return currentDate.getTime();
 	}
 
 	/** 取得某一天的几天后的日期 */
@@ -120,7 +120,7 @@ public class UtilDate {
 		cal.add(Calendar.DAY_OF_MONTH, later);
 		return cal.getTime();
 	}
-	
+
 	/** 取得某年某月的最后一天 */
 	public static Date getLastDayOfMonth(int year, int month) {
 		Calendar cal = Calendar.getInstance();
@@ -130,7 +130,13 @@ public class UtilDate {
 		cal.add(Calendar.DATE, -1);// 下一个月减一为本月最后一天
 		return cal.getTime();// 获得月末是几号
 	}
-	
+
+	/** 取得本月的最后一天 */
+	public static Date getLastDayOfThisMonth() {
+		Calendar cal = Calendar.getInstance();
+		return getLastDayOfMonth(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1);
+	}
+
 	/** 取得今天的0点0分0秒的时间 */
 	@SuppressWarnings("deprecation")
 	public static Date getTodayBegin() {
@@ -140,8 +146,20 @@ public class UtilDate {
 		d.setSeconds(0);
 		return d;
 	}
-	
-	/** 对比两个时间相隔几天（过了24点就算隔一天,如果其中一个时间为null，则返回null） */
+
+	/** 取得某字符串中的日期（仅日期，不需要时间）；如果获取失败，则返回今日 */
+	public static Date getDateNoTimeByString(String date) {
+		Date result = new Date();
+		try {
+			result = UtilDate.SDF_DATE.get().parse(date);
+		} catch (Exception e) {
+			Calendar c = Calendar.getInstance();
+			result = UtilDate.initDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DATE), 0, 0, 0);
+		}
+		return result;
+	}
+
+	/** 对比两个时间相隔几天（过了24点就算隔一天;如果其中一个时间为null，则返回null） */
 	public static Integer operContrastDate(Date endTime, Date beginTime) {
 		if (endTime == null || beginTime == null)
 			return null;
@@ -153,64 +171,48 @@ public class UtilDate {
 		return new Integer(day2 - day1);
 	}
 
-	/** 初始化一个Date类型的值 */
+	/** 判断是否为同一天 */
+	public static boolean operContrastSameDay(Date d1, Date d2) {
+		boolean b = false;
+		if (d1 != null && d2 != null) {
+			String nowDate = SDF_DATE.get().format(d2);
+			String timeDate = SDF_DATE.get().format(d1);
+			if (nowDate.equals(timeDate)) {
+				b = true;
+			}
+		}
+		return b;
+	}
+
+	/** 对比两个时间相差的秒数；如果某参数为NULL，则返回NULL */
+	public static Float operContrastSecond(Date begin, Date end) {
+		if (begin == null || end == null) {
+			return null;
+		}
+		return ((float) (end.getTime() - begin.getTime()) / 1000);
+	}
+
+	/** 对比两个时间相差的秒数；如果某参数为NULL，则返回空串 */
+	public static String operContrastSecondString(Date begin, Date end) {
+		Float result = operContrastSecond(begin, end);
+		if (result != null) {
+			return String.valueOf(result);
+		}
+		return "";
+	}
+
+	/** 初始化一个时间 */
 	public static Date initDate(int year, int month, int date, int hourOfDay, int minute, int second) {
 		Calendar c = Calendar.getInstance();
 		c.clear();
 		c.set(year, month - 1, date, hourOfDay, minute, second);
 		return c.getTime();
 	}
-	
-	
-	
-	
 
-	
-	
-	
-
-	/** 获取只有日期的值，如果参数错误，则返回今天 */
-	public static Date initDateNoTimeByString(String date) {
-		Date result = new Date();
-		try {
-			result = UtilDate.SDF_DATE.get().parse(date);
-		} catch (Exception e) {
-			Calendar c = Calendar.getInstance();
-			result = UtilDate.initDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DATE), 0, 0, 0);
-		}
-		return result;
-	}
-
-	/** 取得本月的最后一天 */
-	public static Date getLastDayOfThisMonth() {
-		Calendar cal = Calendar.getInstance();
-		return getLastDayOfMonth(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1);
-	}
-
-	/** 取得两个时间相差的秒数 */
-	public static float dateDiff_Sec_float(Date begin, Date end) {
-		return ((float) (end.getTime() - begin.getTime()) / 1000);
-	}
-
-	/** 取得两个时间相差的秒数 */
-	public static String dateDiff_Sec(Date begin, Date end) {
-		return String.valueOf(((float) (end.getTime() - begin.getTime()) / 1000));
-	}
-
-	/** String 转 DateTime */
-	public static Date toDateTime(String date) {
-		try {
-			return SDF_DATETIME.get().parse(date);
-		} catch (ParseException e) {
-			return null;
-		}
-	}
-
-	/** 计算还剩余多少时间(x天xx时) */
-	public static String friendly_after(Date date) {
-		Date now = new Date();
-		if (date != null && date.after(now)) {
-			long sy = (date.getTime() - now.getTime()) / (1000 * 60 * 60);
+	/** 计算相差几天几小时，格式：395天05小时;如果是负数，则返回NULL */
+	public static String operContrastDateHour(Date begin, Date end) {
+		if (end != null && end.after(begin)) {
+			long sy = (end.getTime() - begin.getTime()) / (1000 * 60 * 60);
 			int xs = (int) sy;
 			int day = xs / 24;
 			xs %= 24;
@@ -220,14 +222,9 @@ public class UtilDate {
 		}
 	}
 
-	/**
-	 * 秒数转成3天20时25分06秒格式的字符串
-	 * 
-	 * @param duration
-	 * @return
-	 */
-	public static String durationChinese(long duration) {
-		int timetiem = (int) duration;
+	/** 秒数转成"136天20时05分06秒"格式的字符串 */
+	public static String formatToddHHmmss(long theSecond) {
+		int timetiem = (int) theSecond;
 		int minute = timetiem / 60;
 		int hour = minute / 60;
 		int day = hour / 24;
@@ -237,8 +234,8 @@ public class UtilDate {
 		return String.format("%d天%02d时%02d分%02d秒", day, hour, minute, second);
 	}
 
-	/** 以友好的方式显示时间 */
-	public static String friendly_time(Date time) {
+	/** 友好的方式显示时间 */
+	public static String formatFriendly(Date time) {
 		if (time == null) {
 			return "Unknown";
 		}
@@ -278,10 +275,23 @@ public class UtilDate {
 		return ftime;
 	}
 
-	/** 以友好的方式显示时间 */
+	/** @see #formatFriendly(Date) */
+	@Deprecated
+	public static String friendly_time(Date time) {
+		return formatFriendly(time);
+	}
+
+	/** @see #formatFriendly(Date) */
+	@Deprecated
 	public static String friendly_time(String sdate) {
-		Date time = toDateTime(sdate);
-		return friendly_time(time);
+		Date time = format(sdate);
+		return formatFriendly(time);
+	}
+
+	/** @see #format(String) */
+	@Deprecated
+	public static Date toDateTime(String date) {
+		return format(date);
 	}
 
 	/** @see #formatToHHmmss(long) */
@@ -289,20 +299,53 @@ public class UtilDate {
 	public static String duration(long duration) {
 		return formatToHHmmss(duration);
 	}
+
 	/** @see #operContrastDate(Date, Date) */
 	@Deprecated
 	public static Integer contrastDate(Date endTime, Date beginTime) {
 		return operContrastDate(endTime, beginTime);
 	}
+
 	/** @see #getLater(Date, int) */
 	@Deprecated
 	public static Date later(Date base, int later) {
 		return getLaterDay(base, later);
 	}
+
 	/** @see #format(String) */
 	@Deprecated
 	public static Date toDate(String date) {
 		return format(date);
+	}
+
+	/** @see #operContrastSecond(Date, Date) */
+	@Deprecated
+	public static String dateDiff_Sec(Date begin, Date end) {
+		return operContrastSecondString(begin, end);
+	}
+
+	/** @see #getDateNoTimeByString(String) */
+	@Deprecated
+	public static Date initDateNoTimeByString(String date) {
+		return getDateNoTimeByString(date);
+	}
+
+	/** @see #operContrastDateHour(Date, Date) */
+	@Deprecated
+	public static String friendly_after(Date date) {
+		return operContrastDateHour(new Date(), date);
+	}
+
+	/** @see #formatToddHHmmss(long) */
+	@Deprecated
+	public static String durationChinese(long duration) {
+		return formatToddHHmmss(duration);
+	}
+
+	/** @see #operContrastSameDay(Date, Date) */
+	@Deprecated
+	public static boolean isToday(String sdate) {
+		return operContrastSameDay(format(sdate), new Date());
 	}
 
 }
