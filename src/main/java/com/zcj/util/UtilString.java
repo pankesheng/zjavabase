@@ -127,7 +127,7 @@ public class UtilString {
 			} else {
 				return false;
 			}
-		} catch (RuntimeException e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}
