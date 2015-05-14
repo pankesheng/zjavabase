@@ -9,7 +9,7 @@ import org.apache.commons.io.IOUtils;
 import freemarker.cache.TemplateLoader;
 
 /**
- * 处理输出时的HTML数据
+ * 处理输出时的HTML数据，如果不需要处理，则在输出两端加标签noescape，例：<#noescape>${(obj.content)!}</#noescape>
  * @author zouchongjin@sina.com
  * @data 2015年3月13日
  */
