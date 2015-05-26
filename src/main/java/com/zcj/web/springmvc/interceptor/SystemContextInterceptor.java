@@ -49,17 +49,27 @@ public class SystemContextInterceptor implements HandlerInterceptor {
 	}
 
 	private int getOffset(HttpServletRequest request) {
-		String offset = request.getParameter(offsetKey);
-		if (!StringUtils.isBlank(offset) && offset.matches(REGEX)) {
-			return Integer.parseInt(offset);
+		if (StringUtils.isNotBlank(offsetKey)) {
+			String[] offsetKeyArray = offsetKey.split(",");
+			for (String offsetKey : offsetKeyArray) {
+				String offset = request.getParameter(offsetKey);
+				if (!StringUtils.isBlank(offset) && offset.matches(REGEX)) {
+					return Integer.parseInt(offset);
+				}
+			}
 		}
 		return 0;
 	}
 
 	private int getPagesize(HttpServletRequest request) {
-		String pagesize = request.getParameter(pagesizeKey);
-		if (!StringUtils.isBlank(pagesize) && pagesize.matches(REGEX)) {
-			return Integer.parseInt(pagesize);
+		if (StringUtils.isNotBlank(pagesizeKey)) {
+			String[] pagesizeKeyArray = pagesizeKey.split(",");
+			for (String pagesizeKey : pagesizeKeyArray) {
+				String pagesize = request.getParameter(pagesizeKey);
+				if (!StringUtils.isBlank(pagesize) && pagesize.matches(REGEX)) {
+					return Integer.parseInt(pagesize);
+				}
+			}
 		}
 		return defaultPagesize;
 	}
