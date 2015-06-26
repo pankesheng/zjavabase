@@ -20,7 +20,9 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -421,6 +423,33 @@ public class UtilFile {
 			}
 		}
 		return file;
+	}
+	
+	public static Map<String, String> MIMETYPE_MAP = new HashMap<String, String>();
+
+	static {
+		MIMETYPE_MAP.put("doc", "application/msword");
+		MIMETYPE_MAP.put("js", "application/x-javascript");
+		MIMETYPE_MAP.put("css", "text/css");
+		MIMETYPE_MAP.put("png", "image/png");
+		MIMETYPE_MAP.put("apk", "application/vnd.android.package-archive");
+	}
+
+	/**
+	 * 获取文件的MIME类型
+	 * @param filename
+	 * 			带后缀的文件名。支持：foo.txt、a/b/c.jpg等格式
+	 * @return
+	 */
+	public static String getMimeType(String filename) {
+		if (UtilString.isNotBlank(filename)) {
+			String ext = FilenameUtils.getExtension(filename);
+			if (UtilString.isNotBlank(ext)) {
+				ext = ext.toLowerCase();
+				return MIMETYPE_MAP.get(ext);
+			}
+		}
+		return null;
 	}
 	
 	/**
