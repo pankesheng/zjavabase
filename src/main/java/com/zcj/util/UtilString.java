@@ -87,6 +87,11 @@ public class UtilString {
 	}
 
 	/** 验证身份证号 */
+	public static boolean checkIDCard(String idcard, boolean onlyEighteen) {
+		return ValidatorIdcard.isValidatedAllIdcard(idcard, onlyEighteen);
+	}
+	
+	/** 验证身份证号，支持15位的 */
 	public static boolean CheckIDCard(String idcard) {
 		return ValidatorIdcard.isValidatedAllIdcard(idcard);
 	}

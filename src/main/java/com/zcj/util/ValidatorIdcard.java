@@ -18,6 +18,17 @@ public class ValidatorIdcard {
 	// 每位加权因子
 	private static int power[] = { 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 };
 
+	public static boolean isValidatedAllIdcard(String idcard, boolean onlyEighteen) {
+		if (StringUtils.isBlank(idcard)) {
+			return false;
+		} else if (idcard.length() == 15 && !onlyEighteen) {
+			return isValidate18Idcard(convertIdcarBy15bit(idcard));
+		} else if (idcard.length() == 18) {
+			return isValidate18Idcard(idcard);
+		}
+		return false;
+	}
+	
 	/**
 	 * 验证所有的身份证的合法性
 	 * 
@@ -25,14 +36,7 @@ public class ValidatorIdcard {
 	 * @return
 	 */
 	public static boolean isValidatedAllIdcard(String idcard) {
-		if (StringUtils.isBlank(idcard)) {
-			return false;
-		} else if (idcard.length() == 15) {
-			return isValidate18Idcard(convertIdcarBy15bit(idcard));
-		} else if (idcard.length() == 18) {
-			return isValidate18Idcard(idcard);
-		}
-		return false;
+		return isValidatedAllIdcard(idcard, false);
 	}
 
 	/**
