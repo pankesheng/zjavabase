@@ -68,7 +68,7 @@ public class ExcelUtil {
 	 * @param clz
 	 *            对象的类型
 	 */
-	public void exportObjToExcelByTemplate(Map<String, String> datas, String template, OutputStream os, List<?> objs, Class<?> clz) {
+	public synchronized void exportObjToExcelByTemplate(Map<String, String> datas, String template, OutputStream os, List<?> objs, Class<?> clz) {
 		ExcelTemplate et = handlerObj2Excel(template, objs, clz, false);
 		et.replaceFinalData(datas);
 		et.wirteToStream(os);
@@ -92,7 +92,7 @@ public class ExcelUtil {
 	 * @param clz
 	 *            对象的类型
 	 */
-	public void exportObjToExcelByTemplate(Map<String, String> datas, String template, String outPath, List<?> objs, Class<?> clz) {
+	public synchronized void exportObjToExcelByTemplate(Map<String, String> datas, String template, String outPath, List<?> objs, Class<?> clz) {
 		ExcelTemplate et = handlerObj2Excel(template, objs, clz, false);
 		et.replaceFinalData(datas);
 		et.writeToFile(outPath);
@@ -221,7 +221,7 @@ public class ExcelUtil {
 	 * @param data
 	 * 			二维数组
 	 */
-	public void exportArraysToExcel(String outPath, String[][] data) {
+	public synchronized void exportArraysToExcel(String outPath, String[][] data) {
 		Workbook wb = new HSSFWorkbook();
 		Sheet sheet = wb.createSheet();
 		for (int i = 0; i < data.length; i++) {
@@ -261,7 +261,7 @@ public class ExcelUtil {
 	 * @param cellIndex 指定列（下标从0开始）
 	 * @return
 	 */
-	public String readExcelCellByPath(String path, int sheetAt, int rowIndex, int cellIndex) {
+	public synchronized String readExcelCellByPath(String path, int sheetAt, int rowIndex, int cellIndex) {
 		Workbook wb;
 		try {
 			wb = WorkbookFactory.create(new File(path));
@@ -432,7 +432,7 @@ public class ExcelUtil {
 	 *            排除列表底部多少行
 	 * @return
 	 */
-	public <T> List<T> readExcelToObjsByPath(String path, Class<?> clz, int sheetAt, int readLine, int tailLine) {
+	public synchronized <T> List<T> readExcelToObjsByPath(String path, Class<?> clz, int sheetAt, int readLine, int tailLine) {
 		Workbook wb;
 		try {
 			wb = WorkbookFactory.create(new File(path));
@@ -464,7 +464,7 @@ public class ExcelUtil {
 	 * @param clz
 	 * @return
 	 */
-	public <T> List<T> readExcelToObjsByPath(String path, Class<?> clz) {
+	public synchronized <T> List<T> readExcelToObjsByPath(String path, Class<?> clz) {
 		return this.readExcelToObjsByPath(path, clz, 0, 1, 0);
 	}
 
