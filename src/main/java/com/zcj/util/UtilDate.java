@@ -130,7 +130,17 @@ public class UtilDate {
 		cal.add(Calendar.DATE, -1);// 下一个月减一为本月最后一天
 		return cal.getTime();// 获得月末是几号
 	}
-
+	
+	/** 取得本月的第一天 */
+	public static Date getFirstDayOfThisMonth() {
+		Calendar cal = Calendar.getInstance();
+		int y = cal.get(Calendar.YEAR);
+		int m = cal.get(Calendar.MONTH);
+		cal.clear();
+		cal.set(y, m, 1, 0, 0, 0);
+		return cal.getTime();
+	}
+	
 	/** 取得本月的最后一天 */
 	public static Date getLastDayOfThisMonth() {
 		Calendar cal = Calendar.getInstance();
