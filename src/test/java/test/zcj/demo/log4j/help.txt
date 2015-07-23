@@ -19,6 +19,8 @@
 	?	logManager – 日志管理器，它包含有那些被命名的logger，以及从配置文件中读取来的一些控制信息
 
 2、Log4j
+
+	private static Logger logger = Logger.getLogger(PingppAction.class);
 	
 		#DEBUG < INFO < WARN < ERROR < FATAL
 	log4j.rootLogger = DEBUG,C,F

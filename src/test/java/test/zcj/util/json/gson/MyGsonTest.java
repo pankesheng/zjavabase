@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.zcj.util.json.gson.GsonExclusionStrategy;
 import com.zcj.util.json.gson.GsonFieldNamingStrategy;
@@ -38,5 +40,14 @@ public class MyGsonTest {
 		Student ss = new Gson().fromJson(studentJson, Student.class);
 			System.out.println(ss.getName());
 		
+		// test1();
+	}
+	
+	public static void test1() {
+		String jsonString = "{'s':1,'d':{'id':12,'name':'sddddss'}}";
+		JsonParser jsonParser = new JsonParser();
+        JsonObject jsonObject = jsonParser.parse(jsonString).getAsJsonObject();
+        String subJsonString = jsonObject.get("d").getAsJsonObject().toString();
+        System.out.println(subJsonString);
 	}
 }
