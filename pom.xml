@@ -19,7 +19,7 @@
 		<finalName>zjavabase</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
-		<resources> 
+		<resources>
 			<resource>
 				<directory>src/main/java</directory>
 				<includes>
@@ -45,18 +45,30 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			<plugin>   
-         		<groupId>org.apache.maven.plugins</groupId>   
-         		<artifactId>maven-surefire-plugin</artifactId>   
-         		<version>2.4.2</version>   
-         		<configuration>   
-           			<skipTests>true</skipTests>   
-         		</configuration>   
-       		</plugin>  
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.4.2</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-	
+
 	<dependencies>
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.6.4</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -171,7 +183,7 @@
 
 		<!-- com.zcj.web.springmvc -->
 		<!-- com.zcj.util.freemarker -->
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -224,21 +236,21 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!-- com.zcj.util.UtilMyBatis.java -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.18</version>
 		</dependency>
-		
+
 		<!-- test.zcj.demo.task.quartz -->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 			<version>1.8.6</version>
 		</dependency>
-		
+
 		<!-- Email -->
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -250,7 +262,7 @@
 			<artifactId>mailapi</artifactId>
 			<version>1.4.5</version>
 		</dependency>
-		
+
 		<!-- Apache Ftp -->
 		<dependency>
 			<groupId>commons-net</groupId>
@@ -265,6 +277,13 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/sqljdbc4.jar</systemPath>
 		</dependency>
-		
+
+		<!-- JPush -->
+		<dependency>
+			<groupId>cn.jpush.api</groupId>
+			<artifactId>jpush-client</artifactId>
+			<version>3.2.5</version>
+		</dependency>
+
 	</dependencies>
 </project>
