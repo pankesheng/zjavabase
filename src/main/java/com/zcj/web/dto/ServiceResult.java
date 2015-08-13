@@ -13,6 +13,10 @@ public class ServiceResult {
 	private int s;
 	private Object d;
 
+	public static final String ERROR_PARAM = "参数错误";
+	public static final String ERROR_NOPERM = "没有权限";
+	public static final String ERROR_LOGIN = "请重新登录";
+
 	private static final int S_SUCCESS = 1;// 成功标识
 	private static final int S_ERROR = 0;// 失败标识
 	private static final int S_NOLOGIN = 2;// 未登录
@@ -28,13 +32,13 @@ public class ServiceResult {
 	public static ServiceResult initError(String d) {
 		return new ServiceResult(S_ERROR, d);
 	}
-	
+
 	private static ServiceResult initErrorNoPerm() {
-		return new ServiceResult(S_NOPERM, "没有权限");
+		return new ServiceResult(S_NOPERM, ERROR_NOPERM);
 	}
 
 	private static ServiceResult initErrorLogin() {
-		return new ServiceResult(S_NOLOGIN, "请重新登录");
+		return new ServiceResult(S_NOLOGIN, ERROR_LOGIN);
 	}
 
 	/** 返回成功JSON字符串 */
@@ -46,22 +50,22 @@ public class ServiceResult {
 	public static String initErrorJson(String d) {
 		return GSON_D.toJson(initError(d));
 	}
-	
+
 	/** 返回失败JSON字符串--参数错误 */
 	public static String initErrorParamJson() {
-		return GSON_D.toJson(initError("参数错误"));
+		return GSON_D.toJson(initError(ERROR_PARAM));
 	}
 
 	/** 返回重新登录JSON字符串 */
 	public static String initErrorLoginJson() {
 		return GSON_D.toJson(initErrorLogin());
 	}
-	
+
 	/** 返回没有权限JSON字符串 */
 	public static String initErrorNoPermJson() {
 		return GSON_D.toJson(initErrorNoPerm());
 	}
-	
+
 	/** 此返回结果是成功的 */
 	public boolean success() {
 		if (S_SUCCESS == this.getS()) {

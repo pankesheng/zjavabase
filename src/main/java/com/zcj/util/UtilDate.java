@@ -54,6 +54,7 @@ public class UtilDate {
 
 	/** 时间类型转换成字符串（yyyy-MM-dd HH:mm:ss） */
 	public static String format(Date value) {
+		if (value == null) {return null;}
 		return SDF_DATETIME.get().format(value);
 	}
 
