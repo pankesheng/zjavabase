@@ -1,6 +1,11 @@
 package com.zcj.util.convertor;
 
-
+/**
+ * 文件格式转换
+ * 
+ * @author zouchongjin@sina.com
+ * @data 2015年8月25日
+ */
 public class UtilConvert {
 
 	/**

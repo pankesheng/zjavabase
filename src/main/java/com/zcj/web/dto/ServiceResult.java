@@ -13,9 +13,10 @@ public class ServiceResult {
 	private int s;
 	private Object d;
 
-	public static final String ERROR_PARAM = "参数错误";
-	public static final String ERROR_NOPERM = "没有权限";
-	public static final String ERROR_LOGIN = "请重新登录";
+	public static final String ERROR_PARAM = "参数错误";// 0
+	public static final String ERROR_SYSTEM = "系统错误";// 0
+	public static final String ERROR_NOPERM = "没有权限";// 3
+	public static final String ERROR_LOGIN = "请重新登录";// 2
 
 	private static final int S_SUCCESS = 1;// 成功标识
 	private static final int S_ERROR = 0;// 失败标识
@@ -31,6 +32,14 @@ public class ServiceResult {
 
 	public static ServiceResult initError(String d) {
 		return new ServiceResult(S_ERROR, d);
+	}
+
+	public static ServiceResult initErrorParam() {
+		return new ServiceResult(S_ERROR, ERROR_PARAM);
+	}
+	
+	public static ServiceResult initErrorSystem() {
+		return new ServiceResult(S_ERROR, ERROR_SYSTEM);
 	}
 
 	private static ServiceResult initErrorNoPerm() {

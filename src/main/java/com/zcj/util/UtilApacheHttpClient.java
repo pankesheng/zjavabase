@@ -15,6 +15,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
+//<dependency>
+//	<groupId>org.apache.httpcomponents</groupId>
+//	<artifactId>httpclient</artifactId>
+//	<version>4.3.3</version>
+//</dependency>
 /**
  * HTTP请求，包括GET和POST
  * 
@@ -22,22 +27,22 @@ import org.apache.http.util.EntityUtils;
  * @data 2013-4-15
  */
 public class UtilApacheHttpClient {
-	
+
 	public static final String ERROR = "ERROR";
 
 	/**
 	 * GET请求
 	 * 
-	 * @param url 
-	 * 		<br/>
-	 * 		http://www.baidu.com/s?wd=aaa
+	 * @param url
+	 * <br/>
+	 *            http://www.baidu.com/s?wd=aaa
 	 * @return
-	 * @throws IOException 
-	 * @throws ClientProtocolException 
+	 * @throws IOException
+	 * @throws ClientProtocolException
 	 */
 	public static String httpGet(String url) {
 		String response = null;
-		
+
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpGet httpGet = new HttpGet(url);
@@ -52,28 +57,28 @@ public class UtilApacheHttpClient {
 			e.printStackTrace();
 			response = ERROR;
 		}
-		
+
 		return response;
 	}
-	
+
 	/**
 	 * POST请求
 	 * 
 	 * @param url
-	 * 		<br/>
-	 * 		http://www.baidu.com/s
+	 * <br/>
+	 *            http://www.baidu.com/s
 	 * @param params
-	 * 		<br/>
-	 * 		List&lt;NameValuePair&gt; params = new ArrayList&lt;NameValuePair&gt;();
-	 * 		<br/>
-	 * 		params.add(new BasicNameValuePair("wd", "aaa"));
+	 * <br/>
+	 *            List&lt;NameValuePair&gt; params = new
+	 *            ArrayList&lt;NameValuePair&gt;(); <br/>
+	 *            params.add(new BasicNameValuePair("wd", "aaa"));
 	 * @return
-	 * @throws IOException 
-	 * @throws ClientProtocolException 
+	 * @throws IOException
+	 * @throws ClientProtocolException
 	 */
 	public static String httpPost(String url, List<NameValuePair> params) {
 		String response = null;
-		
+
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost(url);
@@ -89,8 +94,8 @@ public class UtilApacheHttpClient {
 			e.printStackTrace();
 			response = ERROR;
 		}
-		
+
 		return response;
 	}
-	
+
 }
