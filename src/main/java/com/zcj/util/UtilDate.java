@@ -33,20 +33,25 @@ public class UtilDate {
 		}
 	};
 
+	private static Date format(String value, String format) {
+		if (UtilString.isNotBlank(value) && UtilString.isNotBlank(format)) {
+			SimpleDateFormat df = new SimpleDateFormat(format);
+			try {
+				return df.parse(value);
+			} catch (ParseException e) {
+			}
+		}
+		return null;
+	}
+
 	/** 字符串转换成时间类型 */
 	public static Date format(String value) {
 		Date date = null;
-		if (UtilString.isNotBlank(value)) {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			try {
-				date = format.parse(value);
-			} catch (ParseException e) {
-				format = new SimpleDateFormat("yyyy-MM-dd");
-				try {
-					date = format.parse(value);
-				} catch (ParseException e1) {
-					// e1.printStackTrace();
-				}
+		date = format(value, "yyyy-MM-dd HH:mm:ss");
+		if (date == null) {
+			date = format(value, "yyyy-MM-dd");
+			if (date == null) {
+				date = format(value, "yyyyMMdd");
 			}
 		}
 		return date;
@@ -54,7 +59,9 @@ public class UtilDate {
 
 	/** 时间类型转换成字符串（yyyy-MM-dd HH:mm:ss） */
 	public static String format(Date value) {
-		if (value == null) {return null;}
+		if (value == null) {
+			return null;
+		}
 		return SDF_DATETIME.get().format(value);
 	}
 
@@ -131,7 +138,7 @@ public class UtilDate {
 		cal.add(Calendar.DATE, -1);// 下一个月减一为本月最后一天
 		return cal.getTime();// 获得月末是几号
 	}
-	
+
 	/** 取得本月的第一天 */
 	public static Date getFirstDayOfThisMonth() {
 		Calendar cal = Calendar.getInstance();
@@ -141,7 +148,7 @@ public class UtilDate {
 		cal.set(y, m, 1, 0, 0, 0);
 		return cal.getTime();
 	}
-	
+
 	/** 取得本月的最后一天 */
 	public static Date getLastDayOfThisMonth() {
 		Calendar cal = Calendar.getInstance();
