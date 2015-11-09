@@ -90,7 +90,7 @@ public class UtilString {
 	public static boolean checkIDCard(String idcard, boolean onlyEighteen) {
 		return ValidatorIdcard.isValidatedAllIdcard(idcard, onlyEighteen);
 	}
-	
+
 	/** 验证身份证号，支持15位的 */
 	public static boolean CheckIDCard(String idcard) {
 		return ValidatorIdcard.isValidatedAllIdcard(idcard);
@@ -135,6 +135,20 @@ public class UtilString {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	/** 验证是否为中国移动手机号码 */
+	public static boolean isPhoneMobile(String code) {
+		if (isPhone(code)) {
+			if (code.startsWith("134") || code.startsWith("135") || code.startsWith("136") || code.startsWith("137")
+					|| code.startsWith("138") || code.startsWith("139") || code.startsWith("147") || code.startsWith("150")
+					|| code.startsWith("151") || code.startsWith("152") || code.startsWith("157") || code.startsWith("158")
+					|| code.startsWith("159") || code.startsWith("178") || code.startsWith("182") || code.startsWith("183")
+					|| code.startsWith("184") || code.startsWith("187") || code.startsWith("188") || code.startsWith("189")) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/** 隐藏手机号码的中间四位 */
