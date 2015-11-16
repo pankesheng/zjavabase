@@ -156,13 +156,9 @@ public class UtilDate {
 	}
 
 	/** 取得今天的0点0分0秒的时间 */
-	@SuppressWarnings("deprecation")
 	public static Date getTodayBegin() {
-		Date d = new Date();
-		d.setHours(0);
-		d.setMinutes(0);
-		d.setSeconds(0);
-		return d;
+		Calendar c = Calendar.getInstance();
+		return initDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DATE), 0, 0, 0);
 	}
 
 	/** 取得某字符串中的日期（仅日期，不需要时间）；如果获取失败，则返回今日 */
@@ -175,6 +171,22 @@ public class UtilDate {
 			result = UtilDate.initDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DATE), 0, 0, 0);
 		}
 		return result;
+	}
+
+	/** 取得指定时间的星期几（1~7）。如果获取失败则返回NULL */
+	public static Integer getWeekByDay(Date day) {
+		if (day == null) {
+			return null;
+		}
+		Calendar c = Calendar.getInstance();
+		c.setTime(day);
+		int dayForWeek = 0;
+		if (c.get(Calendar.DAY_OF_WEEK) == 1) {
+			dayForWeek = 7;
+		} else {
+			dayForWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
+		}
+		return dayForWeek;
 	}
 
 	/** 对比两个时间相隔几天（过了24点就算隔一天;如果其中一个时间为null，则返回null） */
@@ -225,6 +237,12 @@ public class UtilDate {
 		c.clear();
 		c.set(year, month - 1, date, hourOfDay, minute, second);
 		return c.getTime();
+	}
+	
+	/** 根据时间初始化一个今天的时间 */
+	public static Date initDate(int hour, int minu, int second) {
+		Calendar c = Calendar.getInstance();
+		return UtilDate.initDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DATE), hour, minu, second);
 	}
 
 	/** 计算相差几天几小时，格式：395天05小时;如果是负数，则返回NULL */

@@ -93,13 +93,13 @@ public class QuartzTest {
 			 *  '/'表示开始时刻与间隔时段
 			 *  '?'仅适用于 Day-of-Month 和 Day-of-Week,其中之一必填?
 			 *  'L'仅适用于 Day-of-Month 和 Day-of-Week,Day-of-Month=L该月最后一天,Day-of-Week=L表示周六,Day-of-Week=5L表示该月最后一个星期四。
-				Seconds Minutes Hours Day-of-Month Month Day-of-Week Year
-				0		0		0/3	  *			   *	 ?					// 每三小时执行 每小时的整点开始执行
-				0		3/10	*	  *			   *	 ?					// 每十分钟执行 每小时的第三分钟开始执行
-				0		0/30	20-23 ?			   *	 MON-WED,SAT		// 每周一，周二，周三，周六 20:00 到 23:00，每半小时执行一次
-				0		30		11-14/1 ?		   *	 5L					// 每月最后一个周四，中午 11:30-14:30，每小时执行一次
+				Seconds Minutes Hours 	Day-of-Month Month Day-of-Week Year
+				0		0		0/3	  	*			   *	 ?					// 每三小时执行 每小时的整点开始执行
+				0		3/10	*	  	*			   *	 ?					// 每十分钟执行 每小时的第三分钟开始执行
+				0		0/30	20-23 	?			   *	 MON-WED,SAT		// 每周一，周二，周三，周六 20:00 到 23:00，每半小时执行一次
+				0		30		11-14/1 ?			   *	 5L					// 每月最后一个周四，中午 11:30-14:30，每小时执行一次
 			*/
-			trigger3.setCronExpression("0 0/30 20-13 ? * MON-WED,SAT");
+			trigger3.setCronExpression("0 0/30 20-23 ? * MON-WED,SAT");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
