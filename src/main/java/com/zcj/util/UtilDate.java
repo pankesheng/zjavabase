@@ -238,7 +238,7 @@ public class UtilDate {
 		c.set(year, month - 1, date, hourOfDay, minute, second);
 		return c.getTime();
 	}
-	
+
 	/** 根据时间初始化一个今天的时间 */
 	public static Date initDate(int hour, int minu, int second) {
 		Calendar c = Calendar.getInstance();
