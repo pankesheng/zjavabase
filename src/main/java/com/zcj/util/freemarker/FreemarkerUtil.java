@@ -14,7 +14,7 @@ import freemarker.template.TemplateException;
 
 /**
  * Freemarker 工具类</br>
- *		FreemarkerUtil.getInstance(freemarkerConfig).htmlFile("www/ohga/index.ftl", root, "D:/index.jsp");</br>
+ *		FreemarkerUtil.getInstance(freemarkerConfig).htmlFile(root, "/WEB-INF/ftl/www/template/index.ftl", "D:/index.jsp");</br>
  * @author zouchongjin@sina.com
  * @data 2014年6月12日
  */
@@ -51,8 +51,8 @@ public class FreemarkerUtil {
 	
 	/**
 	 * 静态化成页面
-	 * @param file 模板文件的相对路径
 	 * @param datas
+	 * @param file 模板文件的相对路径
 	 * @param outFile 保存的绝对路径
 	 * @return
 	 */
@@ -61,7 +61,12 @@ public class FreemarkerUtil {
 		try {
 			Template temp = conf.getTemplate(file, ENCODE);
 			
-			out = new FileWriterWithEncoding(new File(outFile), ENCODE);
+			File outF = new File(outFile);
+			if (!outF.exists()) {
+				(new File(outF.getParent())).mkdirs();
+			}
+			
+			out = new FileWriterWithEncoding(outF, ENCODE);
 			
 			temp.process(datas, out);
 			
