@@ -144,7 +144,7 @@ public class UtilString {
 					|| code.startsWith("138") || code.startsWith("139") || code.startsWith("147") || code.startsWith("150")
 					|| code.startsWith("151") || code.startsWith("152") || code.startsWith("157") || code.startsWith("158")
 					|| code.startsWith("159") || code.startsWith("178") || code.startsWith("182") || code.startsWith("183")
-					|| code.startsWith("184") || code.startsWith("187") || code.startsWith("188") || code.startsWith("189")) {
+					|| code.startsWith("184") || code.startsWith("187") || code.startsWith("188")) {
 				return true;
 			}
 		}
