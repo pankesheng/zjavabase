@@ -51,7 +51,7 @@ public class BasicAction {
 	 * @param type
 	 *            文件夹名称，支持“-”连接的多级文件夹结构
 	 * @param basePath
-	 *            文件保存的物理路径前缀
+	 *            文件保存的物理根路径
 	 * @return ServiceResult对象。
 	 *         <p>
 	 *         操作失败：s=0；d=失败原因

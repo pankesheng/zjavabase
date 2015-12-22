@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * 分页信息、线程池
+ * 分页信息、站点信息、线程池
  * 
  * @author ZCJ
  * @data 2013-5-9
@@ -16,11 +16,25 @@ public class SystemContext {
 	
 	private static ThreadLocal<Integer> offset = new ThreadLocal<Integer>();// 分页偏移量
 	private static ThreadLocal<Integer> pagesize = new ThreadLocal<Integer>();// 分页每页条数
+	private static ThreadLocal<String> site = new ThreadLocal<String>();// 当前站点
 
 	private static final ExecutorService executorService = Executors.newCachedThreadPool();// 线程池
 	
 	public static ExecutorService getExecutorService() {
 		return executorService;
+	}
+	
+	public static void setSite(String _site) {
+		site.set(_site);
+	}
+
+	public static String getSite() {
+		String _site = site.get();
+		return _site;
+	}
+
+	public static void removeSite() {
+		site.remove();
 	}
 	
 	public static void setOffset(int _offset) {
