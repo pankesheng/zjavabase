@@ -20,27 +20,27 @@ public interface BasicMapper <T, ID extends Serializable> {
 	String QBUILDER = "qbuilder";
 
 	/**
-	 * 保存数据到指定语种表
+	 * 保存数据
 	 */
 	void insert(@Param(OBJECT) T object);
 	
 	/**
-	 * 批量保存数据到指定语种表
+	 * 批量保存数据
 	 */
 	void inserts(@Param(OBJECTS) Collection<T> objects);
 
 	/**
-	 * 修改数据到指定语种表
+	 * 修改数据
 	 */
 	void update(@Param(OBJECT) T object);
 
 	/**
-	 * 根据id字段在指定语种表中删除数据
+	 * 根据id字段删除数据
 	 */
 	void delete(@Param(ID) ID id);
 
 	/**
-	 * 根据id字段集合在指定语种表中删除数据
+	 * 根据id字段集合删除数据
 	 */
 	void deleteByIds(@Param(IDS) Collection<ID> ids);
 	
@@ -50,17 +50,17 @@ public interface BasicMapper <T, ID extends Serializable> {
 	void cleanTable();
 
 	/**
-	 * 根据id字段在指定语种表中查询数据
+	 * 根据id字段查询数据
 	 */
 	T findById(@Param(ID) ID id);
 
 	/**
-	 * 查询指定语种表中的记录
+	 * 查询表中的记录
 	 */
 	List<T> find(@Param(QBUILDER) Map<String, Object> qbuilder, @Param(START) Integer start, @Param(SIZE) Integer size, @Param(ORDERBY) String orderby);
 
 	/**
-	 * 在指定语种表中查询总记录数
+	 * 查询总记录数
 	 */
 	int getTotalRows(@Param(QBUILDER) Map<String, Object> qbuilder);
 
