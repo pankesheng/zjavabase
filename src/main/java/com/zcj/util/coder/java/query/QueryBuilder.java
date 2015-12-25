@@ -1,4 +1,4 @@
-package com.zcj.util.coder.query;
+package com.zcj.util.coder.java.query;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

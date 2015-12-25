@@ -6,9 +6,22 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class TableBuilder {
+public class DatabaseBuilder {
 
-	public static Table initTable(Class<?> c, String databaseType) {
+	public static Database initDatabase(Class<?>[] carray, String databaseType) {
+		List<Table> tables = new ArrayList<Table>();
+		for (Class<?> c : carray) {
+			tables.add(initTable(c, databaseType));
+		}
+		String dname = carray[0].getName().split("\\.")[2];
+
+		Database result = new Database();
+		result.setName(dname);
+		result.setTables(tables);
+		return result;
+	}
+
+	private static Table initTable(Class<?> c, String databaseType) {
 		String tableName = "t_" + StringUtils.lowerCase(c.getSimpleName());
 		List<TableColumn> columns = new ArrayList<TableColumn>();
 		Field[] fs = c.getDeclaredFields();

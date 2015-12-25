@@ -1,4 +1,4 @@
-package com.zcj.util.coder.query;
+package com.zcj.util.coder.java.query;
 
 /**
  * 查询语句的属性
