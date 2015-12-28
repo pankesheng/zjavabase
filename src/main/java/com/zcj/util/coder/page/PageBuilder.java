@@ -21,6 +21,7 @@ public class PageBuilder {
 			p.setModuleName(c.getName().split("\\.")[4]);
 			p.setDialog(pageType.dialog());
 			p.setUeditor(pageType.ueditor());
+			p.setUpload(pageType.upload());
 			p.setExport(pageType.export());
 
 			List<PageColumnBean> columnList = new ArrayList<PageColumnBean>();

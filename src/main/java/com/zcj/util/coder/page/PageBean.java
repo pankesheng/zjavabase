@@ -22,6 +22,9 @@ public class PageBean {
 
 	/** 是否需要引入百度编辑器（默认否） */
 	private boolean ueditor = false;
+	
+	/** 是否需要引入上传插件（默认否） */
+	private boolean upload = false;
 
 	/** 是否生成导出按钮（默认否） */
 	private boolean export = false;
@@ -43,6 +46,14 @@ public class PageBean {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isUpload() {
+		return upload;
+	}
+
+	public void setUpload(boolean upload) {
+		this.upload = upload;
 	}
 
 	public String getClassName() {

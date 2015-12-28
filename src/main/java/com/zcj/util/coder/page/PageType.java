@@ -27,6 +27,9 @@ public @interface PageType {
 	/** 是否需要引入百度编辑器（默认否） */
 	boolean ueditor() default false;
 
+	/** 是否需要引入上传插件（默认否） */
+	boolean upload() default false;
+
 	/** 是否生成导出按钮（默认否） */
 	boolean export() default false;
 
