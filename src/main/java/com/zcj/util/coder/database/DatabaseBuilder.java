@@ -39,6 +39,12 @@ public class DatabaseBuilder {
 					if (!sqlType.nullable()) {
 						tNullable = false;
 					}
+					if ("text".equals(sqlType.type())) {
+						if (Database.TYPE_MYSQL.equals(databaseType)) {
+							tType = "text";
+							tLength = null;
+						}
+					}
 				}
 				columns.add(new TableColumn(f.getName(), tType, tLength, tNullable));
 			}

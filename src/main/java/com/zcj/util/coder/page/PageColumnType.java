@@ -24,7 +24,7 @@ public @interface PageColumnType {
 	/** 是否必填（默认否） */
 	boolean must() default false;
 
-	/** 类型，可取值：text[默认]、textarea、select、img、date、ueditor */
+	/** 类型，可取值：text[默认]、textarea、select、img、date、ueditor、file */
 	String type() default "text";
 
 	/**
@@ -53,8 +53,8 @@ public @interface PageColumnType {
 	boolean grid() default false;
 	
 	/**
-	 * 是否提供查询（默认否）<br>
-	 * 关于后台接收查询参数：如果字段名为“name”，则后台通过“searchName”接收查询参数 */
+	 * 是否提供查询（当 type="text||textarea||date||ueditor||select" 时可用）（默认否）<br>
+	 * 关于后台接收查询参数：如果字段名为“name”，则后台通过“searchName”接收查询参数；如果是date类型，则后台通过“searchXxxBegin”和“searchXxxEnd”接收 */
 	boolean search() default false;
 	
 }

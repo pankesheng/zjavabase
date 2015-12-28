@@ -14,6 +14,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TableColumnType {
+	
+	/** 字段类型，可取值：text。（默认空串[按JAVA类型自动生成]） */
+	String type() default "";
 
 	/** 字段长度，0表示不需要设置长度 */
 	int length() default 0;
