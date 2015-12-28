@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 查询语句的属性<br>
+ * 查询条件的属性<br>
  * value支持：=、like、in、time
  * 
  * @author zouchongjin@sina.com
@@ -18,5 +18,8 @@ public @interface QueryColumnType {
 
 	/** 支持：=、like、in、time */
 	String[] value() default {};
+	
+	/** 是否作为list页面的查询条件（默认否） */
+	boolean listQuery() default false;
 
 }

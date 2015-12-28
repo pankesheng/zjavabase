@@ -16,7 +16,7 @@ public class QueryBuilder {
 					QueryColumnType qtype = f.getAnnotation(QueryColumnType.class);
 					String[] es = qtype.value();
 					for (String e : es) {
-						qbuilderList.add(new QueryColumn(f.getName(), e));
+						qbuilderList.add(new QueryColumn(f.getName(), e, qtype.listQuery()));
 					}
 				}
 			}
