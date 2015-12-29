@@ -18,10 +18,10 @@ public @interface TableColumnType {
 	/** 字段类型，可取值：text。（默认空串[按JAVA类型自动生成]） */
 	String type() default "";
 
-	/** 字段长度，0表示不需要设置长度 */
+	/** 字段长度（默认0[按JAVA类型自动生成，String长度为100]） */
 	int length() default 0;
 
-	/** 字段是否允许为空 */
+	/** 字段允许为空（默认允许空） */
 	boolean nullable() default true;
 
 }
