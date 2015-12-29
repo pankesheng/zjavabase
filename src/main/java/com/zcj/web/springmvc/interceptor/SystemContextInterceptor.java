@@ -26,6 +26,7 @@ public class SystemContextInterceptor implements HandlerInterceptor {
 
 	private String siteKey = "site";// 全局请求有效的参数名
 	private boolean siteBack;// 请求结束后是否把值传回视图
+	private String defaultSite;// 全局参数的默认值
 
 	@Override
 	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3) throws Exception {
@@ -76,6 +77,9 @@ public class SystemContextInterceptor implements HandlerInterceptor {
 			if (StringUtils.isNotBlank(site)) {
 				return site.trim();
 			}
+		}
+		if (StringUtils.isNotBlank(defaultSite)) {
+			return defaultSite.trim();
 		}
 		return null;
 	}
@@ -160,6 +164,14 @@ public class SystemContextInterceptor implements HandlerInterceptor {
 
 	public void setSiteKey(String siteKey) {
 		this.siteKey = siteKey;
+	}
+
+	public String getDefaultSite() {
+		return defaultSite;
+	}
+
+	public void setDefaultSite(String defaultSite) {
+		this.defaultSite = defaultSite;
 	}
 
 }

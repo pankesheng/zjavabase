@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 对应页面里的配置
+ * 对应页面里的配置（仅用于生成代码文件）
  * 
  * @author zouchongjin@sina.com
  * @data 2015年12月25日
