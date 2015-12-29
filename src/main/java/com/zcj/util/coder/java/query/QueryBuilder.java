@@ -15,8 +15,20 @@ public class QueryBuilder {
 				if (f.isAnnotationPresent(QueryColumnType.class)) {
 					QueryColumnType qtype = f.getAnnotation(QueryColumnType.class);
 					String[] es = qtype.value();
+					String fieldType = "";
+					if ("class java.lang.Integer".equals(f.getType().toString())) {
+						fieldType = "Integer";
+					} else if ("class java.lang.Long".equals(f.getType().toString())) {
+						fieldType = "Long";
+					} else if ("class java.lang.String".equals(f.getType().toString())) {
+						fieldType = "String";
+					} else if ("class java.util.Date".equals(f.getType().toString())) {
+						fieldType = "Date";
+					} else if ("class java.lang.Float".equals(f.getType().toString())) {
+						fieldType = "Float";
+					}
 					for (String e : es) {
-						qbuilderList.add(new QueryColumn(f.getName(), e, qtype.listQuery()));
+						qbuilderList.add(new QueryColumn(f.getName(), fieldType, e, qtype.listQuery()));
 					}
 				}
 			}
