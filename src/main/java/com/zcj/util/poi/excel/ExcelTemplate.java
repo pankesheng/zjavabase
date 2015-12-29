@@ -10,9 +10,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFPatriarch;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Hyperlink;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -222,6 +231,62 @@ public class ExcelTemplate {
 		setCellStyle(c);
 		c.setCellValue(value);
 		curColIndex++;
+	}
+	
+	public void createCellLn(String value) {
+		String[] str=value.split("\r\n");
+		CellStyle cellStyle=wb.createCellStyle();
+		cellStyle.setWrapText(true);
+		Cell c = curRow.createCell(curColIndex);
+		curRow.setHeightInPoints(str.length*15);
+		c.setCellStyle(cellStyle);
+		c.setCellValue(value);
+		curColIndex++;
+	}
+	
+	public void createCell(byte[] value) {
+		Cell c = curRow.createCell(curColIndex);
+		setCellStyle(c);
+		HSSFPatriarch patriarch = (HSSFPatriarch) sheet.createDrawingPatriarch();
+		// 有图片时，设置行高为60px;
+		curRow.setHeightInPoints(50);
+		// 设置图片所在列宽度为80px,注意这里单位的一个换算
+		sheet.setColumnWidth(curColIndex, (short) (35.7 * 105));
+		// sheet.autoSizeColumn(i);
+		byte[] bsValue = (byte[]) value;
+		HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0,
+				1023, 255, (short) curColIndex, (curRowIndex-1), (short) curColIndex, (curRowIndex-1));
+		anchor.setAnchorType(2);
+		patriarch.createPicture(anchor, wb.addPicture(
+				bsValue, HSSFWorkbook.PICTURE_TYPE_JPEG));
+		curColIndex++;
+	}
+	
+	public void createCell(TextLink value) {
+		CreationHelper createHelper = wb.getCreationHelper(); 
+		Cell c = curRow.createCell(curColIndex);
+		Hyperlink link = createHelper.createHyperlink(Hyperlink.LINK_URL);  
+	    link.setAddress(value.getAddress());  
+	    c.setHyperlink(link);  
+	    //设置单元格的样式为文本超链接的样式
+	    c.setCellStyle(getTextLinkStyle());  
+		c.setCellValue(value.getTitle());
+		curColIndex++;
+	}
+	
+	//获得文本超链接单元格样式
+	public CellStyle getTextLinkStyle(){
+		CellStyle text_link_style = wb.createCellStyle();  
+		Font text_link_font = wb.createFont();  
+		//添加文字下划线
+		text_link_font.setUnderline(HSSFFont.U_SINGLE);  
+		//设置文字颜色
+		text_link_font.setColor(IndexedColors.BLUE.getIndex());
+		text_link_style.setFont(text_link_font); 
+		//居中显示
+		text_link_style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		text_link_style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		return text_link_style;
 	}
 
 	/** 换行 */

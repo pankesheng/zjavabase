@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CreationHelper;
@@ -145,7 +146,23 @@ public class ExcelUtil {
 			et.createNewRow();
 			for (ExcelHeader eh : headers) {
 				try {
-					et.createCell(BeanUtils.getProperty(obj, getMethodName(eh)));
+					Object value=PropertyUtils.getProperty(obj, getMethodName(eh));
+					if(value instanceof Integer){
+						et.createCell(((Integer) value).intValue());
+					}else if(value instanceof String){
+						if(((String) value).contains("\r\n")){
+							et.createCellLn((String)value);
+						}else{
+							et.createCell((String)value);
+						}
+					}else if(value instanceof byte[]){
+						et.createCell((byte[])value);
+						//判断是否是文本超链接
+					}else if(value instanceof TextLink){
+						et.createCell((TextLink)value);
+					}else if(value==null){
+						et.createCell("");
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 					throw new RuntimeException("BeanUtils获取属性值失败");
