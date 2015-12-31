@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 对应页面里的配置（仅用于生成代码文件）
+ * 对应页面里的配置（仅用于生成页面文件）
  * 
  * @author zouchongjin@sina.com
  * @data 2015年12月25日
@@ -29,7 +29,7 @@ public @interface PageColumnType {
 
 	/**
 	 * 验证方式（当 type="text||textarea||select||date" 时可用）（默认空串[不验证]）</br>
-	 * 例："min-len: 4"</br>
+	 * 例："min-len:4|n[仅为数字]|mobile[手机号]|max-len:10|scope:1-10[数字区间限制]|idcard|url|email|ip"等</br>
 	 * 必填验证[data-check="must"]不需要设置，通过是否必填属性[PageColumnBean.must]决定是否必填，因为关系到页面的星号[*]显示
 	 */
 	String check() default "";

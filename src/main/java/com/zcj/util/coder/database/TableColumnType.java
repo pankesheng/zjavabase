@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 数据库表字段的属性（仅用于生成代码文件）
+ * 数据库表字段的属性（仅用于生成SQL文件）
  * 
  * @author zouchongjin@sina.com
  * @data 2015年12月23日

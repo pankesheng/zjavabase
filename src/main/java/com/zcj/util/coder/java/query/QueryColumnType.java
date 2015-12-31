@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 查询条件的属性（仅用于生成代码文件）<br>
+ * 查询条件的属性（仅用于生成JAVA文件）<br>
  * value支持：=、like、in、time
  * 
  * @author zouchongjin@sina.com
