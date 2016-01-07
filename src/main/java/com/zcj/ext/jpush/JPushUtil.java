@@ -20,7 +20,7 @@ import cn.jpush.api.push.model.notification.Notification;
 //	<groupId>cn.jpush.api</groupId>
 //	<artifactId>jpush-client</artifactId>
 //	<version>3.2.5</version>
-//</dependency>
+//</dependency>111
 public class JPushUtil {
 
 	private static Logger logger = Logger.getLogger(JPushUtil.class);
