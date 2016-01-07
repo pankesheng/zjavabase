@@ -79,6 +79,16 @@ public class DatabaseBuilder {
 			} else if ("class java.util.Date".equals(ff.getType().toString())) {
 				return new String[] { "datetime", null };
 			}
+		} else if (Database.TYPE_ORACLE.equals(databaseType)) {
+			if ("class java.lang.Integer".equals(ff.getType().toString())) {
+				return new String[] { "number", "11" };
+			} else if ("class java.lang.Long".equals(ff.getType().toString())) {
+				return new String[] { "number", "20" };
+			} else if ("class java.lang.String".equals(ff.getType().toString())) {
+				return new String[] { "nvarchar2", "100" };
+			} else if ("class java.util.Date".equals(ff.getType().toString())) {
+				return new String[] { "date", null };
+			}
 		}
 		return new String[] { null, null };
 	}
