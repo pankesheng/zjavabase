@@ -15,10 +15,12 @@ package test.zcj.demo.designpattern.forms.adapter;
  */
 public class TestAdapter {
 
+	// 【已存在】
 	public interface MyService {
 		void run();
 	}
 
+	// 【已存在】
 	public class MyServiceImpl implements MyService {
 		@Override
 		public void run() {
@@ -26,7 +28,7 @@ public class TestAdapter {
 		}
 	}
 
-	// 已存在的、但是使用方法和MyServiceImpl不一样的类
+	// 【已存在】 但是使用方法和MyServiceImpl不一样的类
 	public class OtherServiceImpl {
 		public void otherRun() {
 			System.out.println("特殊的实现");
