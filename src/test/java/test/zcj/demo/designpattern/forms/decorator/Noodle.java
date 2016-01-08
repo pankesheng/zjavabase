@@ -1,13 +1,10 @@
 package test.zcj.demo.designpattern.forms.decorator;
 
-public abstract class Noodle {
-
-	String description;
-
-	public String getDescriptin() {
-		return description;
+public class Noodle implements Food {
+	
+	@Override
+	public String p1() {
+		return "一碗面";
 	}
-
-	public abstract double cost();
-
+	
 }

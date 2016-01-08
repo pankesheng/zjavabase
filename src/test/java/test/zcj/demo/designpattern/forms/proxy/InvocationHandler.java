@@ -1,4 +1,4 @@
-package test.zcj.demo.designpattern.proxy;
+package test.zcj.demo.designpattern.forms.proxy;
 
 import java.lang.reflect.Method;
 

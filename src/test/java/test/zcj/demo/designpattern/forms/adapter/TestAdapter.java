@@ -65,4 +65,8 @@ public class TestAdapter {
 		MyService service3 = new OtherAdapter2(new OtherServiceImpl());
 		service3.run();
 	}
+	
+	public static void main(String[] args) {
+		new TestAdapter().test();
+	}
 }

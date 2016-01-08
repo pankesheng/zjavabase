@@ -1,4 +1,4 @@
-package test.zcj.demo.designpattern.proxy;
+package test.zcj.demo.designpattern.forms.proxy;
 
 import java.lang.reflect.Method;
 
@@ -7,7 +7,7 @@ public class MyProxyTest {
 	public interface UserMgr {
 		void addUser();
 	}
-	
+
 	public class UserMgrImpl implements UserMgr {
 		@Override
 		public void addUser() {
@@ -15,12 +15,14 @@ public class MyProxyTest {
 			System.out.println("2: 做日志在另外一张表");
 		}
 	}
-	
+
 	public class TransactionHandler implements InvocationHandler {
 		private Object target;
+
 		public TransactionHandler(Object target) {
 			this.target = target;
 		}
+
 		@Override
 		public void invoke(Object o, Method m) {
 			System.out.println("Transaction Start");
@@ -32,15 +34,14 @@ public class MyProxyTest {
 			System.out.println("Transaction Commit");
 		}
 	}
-	
+
 	public void test() throws Exception {
 		UserMgr mgr = new UserMgrImpl();
 		InvocationHandler h = new TransactionHandler(mgr);
-		//TimeHandler h2 = new TimeHandler(h);
-		UserMgr u = (UserMgr)Proxy.newProxyInstance(UserMgr.class,h);
+		UserMgr u = (UserMgr) Proxy.newProxyInstance(UserMgr.class, h);
 		u.addUser();
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 		new MyProxyTest().test();
 	}

@@ -1,4 +1,4 @@
-package test.zcj.demo.designpattern.proxy;
+package test.zcj.demo.designpattern.forms.proxy;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -11,7 +11,6 @@ import javax.tools.JavaCompiler;
 import javax.tools.JavaCompiler.CompilationTask;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
-
 
 public class Proxy {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
