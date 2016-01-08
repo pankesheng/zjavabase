@@ -11,35 +11,6 @@ Facade:“门面”设计模式,
 		当类关系调来调去时，另建一个门面类，让门面类理清所有类的关系，我再调用这个门面类。
 		Struts2中的Action，一个Action类里写多个Action方法，这个Action就是一个门面。
 
-Adapter:“适配器”设计模式,
-		当110V电压的电器用在220V电压的电源时，需要在电器里加个电压转换适配器，把220V的电压转换成110V。
-		JDBC-ODBC-Bridge
-		Java.io.InputStreamReader
-		
-		class ReversibleArrayList<T> extends ArrayList<T> {
-		  public ReversibleArrayList (Collection<T> c) {
-		  	super(c);
-		  }
-		  public Iterable<T> reversed() {
-		    return new Iterable<T>() {
-		      public Iterator<T> iterator() {
-			  	return new Iterator<T>() {
-			  	  int current = size()-1;
-			  	  public boolean hasNext() {return current > -1;}
-			  	  public T next(){return get(current--);}
-			  	};
-			  }
-			};
-		  }
-		}
-		public class AdapterMethodIdiom {
-		  public static void main(String[] args) {
-		    ReversibleArrayList<String> ral = new ReversibleArrayList<String>(Arrays.asList("To be".split(" ")));
-		    for(String s : ral){System.out.println(s + " ");}
-		    for(String s : ral.reversed()){System.out.println(s + " ");}
-		  }
-		}
-			
 
 单一职责原则
 	不要存在多于一个导致类变更的原因。
