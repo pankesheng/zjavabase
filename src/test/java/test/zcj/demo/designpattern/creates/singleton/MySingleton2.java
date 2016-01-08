@@ -1,4 +1,4 @@
-package test.zcj.demo.designpattern.singleton;
+package test.zcj.demo.designpattern.creates.singleton;
 
 /**
  * 单例模式（懒汉式单例）
@@ -11,6 +11,7 @@ public class MySingleton2 {
 	private static MySingleton2 singleton;
 
 	private MySingleton2() {
+		
 	}
 
 	public static synchronized MySingleton2 getInstance() {

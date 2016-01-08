@@ -1,10 +1,10 @@
-package test.zcj.demo.designpattern.factory;
+package test.zcj.demo.designpattern.creates.factory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 3、Spring 的工厂模式
+ * 3、Spring 的工厂模式（抽象工厂模式）
  * @author ZCJ
  * @data 2012-12-31
  */

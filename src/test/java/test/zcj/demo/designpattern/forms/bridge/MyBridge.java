@@ -1,16 +1,18 @@
-package test.zcj.demo.designpattern.bridge;
+package test.zcj.demo.designpattern.forms.bridge;
 
 /**
  * "桥接"设计模式
- * 将抽象部分与它的实现部分分离,使它们都可以独立地变化。
- * 如果子类有多个维度排列组合，需要解决耦合问题，就用桥接模式（多对多）。
+ * 
+ * 		将抽象部分与它的实现部分分离,使它们都可以独立地变化。
+ * 		如果子类有多个维度排列组合，需要解决耦合问题，就用桥接模式（多对多）。
+ * 
  * @author ZCJ
  * @data 2012-11-8
  */
 public class MyBridge {
 
 	/** 定义抽象的礼物给的方式 */
-	public class GiftImpl {}
+	abstract class GiftImpl {}
 	
 	/** 定义礼物给的方式A */
 	public class GiftImplA extends GiftImpl {}
@@ -19,7 +21,7 @@ public class MyBridge {
 	public class GiftImplB extends GiftImpl {}
 	
 	/** 定义抽象的礼物 */
-	public class Gift {
+	abstract class Gift {
 		protected GiftImpl impl;
 	}
 	
