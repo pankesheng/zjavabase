@@ -1,4 +1,4 @@
-package test.zcj.demo.designpattern.ioc;
+package test.zcj.demo.designpattern.other.ioc;
 
 import java.io.IOException;
 import java.lang.reflect.Method;

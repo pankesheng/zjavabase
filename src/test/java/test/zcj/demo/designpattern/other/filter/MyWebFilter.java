@@ -1,4 +1,4 @@
-package test.zcj.demo.designpattern.filter;
+package test.zcj.demo.designpattern.other.filter;
 
 import java.util.ArrayList;
 import java.util.List;

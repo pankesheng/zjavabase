@@ -1,4 +1,4 @@
-package test.zcj.demo.designpattern.interceptor;
+package test.zcj.demo.designpattern.other.interceptor;
 
 import java.util.ArrayList;
 import java.util.List;

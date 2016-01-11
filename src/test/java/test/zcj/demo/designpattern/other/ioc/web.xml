@@ -2,7 +2,7 @@
 
 <servlet>
 	<servlet-name>InitBeanFactoryServlet</servlet-name>
-	<servlet-class>cn.com.leadfar.cms.backend.view.InitBeanFactoryServlet</servlet-class>
+	<servlet-class>test.zcj.demo.designpattern.other.ioc.InitBeanFactoryServlet</servlet-class>
 	<init-param>
 		<param-name>configLocation</param-name>
 		<param-value>beans.properties</param-value>
