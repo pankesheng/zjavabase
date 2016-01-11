@@ -1,9 +1,19 @@
-package test.zcj.demo.designpattern.mediator;
+package test.zcj.demo.designpattern.activity.mediator;
 
 /**
-中介者模式(调停者模式)
-	当类关系错综复杂的时候，另建一个调停者类，让所有类只对这个调停者有关系。
-	
+ * 中介者设计模式
+ * 
+ * 	意图：
+ * 		用一个中介对象来封装一系列的对象交互。中介者使各对象不需要显式地相互引用，从而使其耦合松散，而且可以独立地改变它们之间的交互。
+ * 
+ * 	适用环境：
+ * 		当类关系错综复杂的时候，另建一个调停者类，让所有类只对这个调停者有关系。
+ * 
+ * 	实例：
+ * 		MVC中的C
+ * 
+ * @author zouchongjin@sina.com
+ * @data 2016年1月11日
  */
 public class MyMediator {
 	

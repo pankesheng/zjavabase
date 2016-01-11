@@ -35,7 +35,7 @@ public class TestAdapter {
 		}
 	}
 
-	// 适配器实现方法一：类适配器
+	// 适配器实现方法一：类适配器，当希望将一个类转换成满足另一个新接口的类时
 	public class OtherAdapter extends OtherServiceImpl implements MyService {
 		@Override
 		public void run() {
@@ -43,7 +43,7 @@ public class TestAdapter {
 		}
 	}
 
-	// 适配器实现方法二：对象适配器
+	// 适配器实现方法二：对象适配器，当希望将一个对象转换成满足另一个新接口的对象时
 	public class OtherAdapter2 implements MyService {
 		private OtherServiceImpl otherService;
 

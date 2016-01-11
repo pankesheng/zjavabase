@@ -1,10 +1,15 @@
-package test.zcj.demo.designpattern.observer;
+package test.zcj.demo.designpattern.activity.observer;
 
 import java.util.Vector;
 
 /**
- * 观察者模式
+ * 观察者设计模式
+ * 
+ * 	意图：
  * 		定义对象间一种一对多的依赖关系，使得当每一个对象改变状态，则所有依赖于它的对象都会得到通知并自动更新。
+ * 
+ * @author zouchongjin@sina.com
+ * @data 2016年1月11日
  */
 public class MyObserver {
 
@@ -32,7 +37,7 @@ public class MyObserver {
 	/** 具体的被观察者 */
 	class ConcreteSubject extends Subject {
 		public void doSomething() {
-			System.out.println("被观察者事件反生");
+			System.out.println("被观察者事件发生");
 			this.notifyObserver();
 		}
 	}
@@ -56,13 +61,15 @@ public class MyObserver {
 		}
 	}
 
-	public class Client {
-		public void test() {
-			Subject sub = new ConcreteSubject();
-			sub.addObserver(new ConcreteObserver1()); // 添加观察者1
-			sub.addObserver(new ConcreteObserver2()); // 添加观察者2
-			sub.doSomething();
-		}
+	public void test() {
+		Subject sub = new ConcreteSubject();
+		sub.addObserver(new ConcreteObserver1()); // 添加观察者1
+		sub.addObserver(new ConcreteObserver2()); // 添加观察者2
+		sub.doSomething();
+	}
+	
+	public static void main(String[] args) {
+		new MyObserver().test();
 	}
 
 }
