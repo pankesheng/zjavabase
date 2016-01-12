@@ -7,7 +7,11 @@ package test.zcj.demo.designpattern.forms.decorator;
  * 		动态地给一个对象添加一些额外的职责（可重复添加）。就增加功能来说，Decorator模式相比生成子类更为灵活。
  * 
  * 	适用环境：
- * 		不固定次数的向对象添加额外的内容
+ * 		需要扩展一个类的功能。
+ * 		动态的为一个对象增加功能，而且还能动态撤销。
+ * 
+ * 	缺点：
+ * 		缺点：产生过多相似的对象，不易排错。
  * 
  * @author zouchongjin@sina.com
  * @data 2016年1月8日

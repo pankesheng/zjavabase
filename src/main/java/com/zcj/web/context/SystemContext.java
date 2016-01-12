@@ -18,7 +18,7 @@ public class SystemContext {
 	private static ThreadLocal<Integer> pagesize = new ThreadLocal<Integer>();// 分页每页条数
 	private static ThreadLocal<String> site = new ThreadLocal<String>();// 当前站点
 
-	private static final ExecutorService executorService = Executors.newCachedThreadPool();// 线程池
+	private static final ExecutorService executorService = Executors.newFixedThreadPool(15);// 线程池
 	
 	public static ExecutorService getExecutorService() {
 		return executorService;
