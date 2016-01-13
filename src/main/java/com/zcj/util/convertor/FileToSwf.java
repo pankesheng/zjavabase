@@ -7,6 +7,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 使用条件：</br>软件：SWFTools
+ * 
+ * @author zouchongjin@sina.com
+ * @data 2016年1月13日
+ */
 public class FileToSwf {
 
 	private static final String CONVERTFILETYPE = "pdf,jpg,jpeg,font,gif,png,wav";

@@ -40,7 +40,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import com.zcj.util.filenameutils.FilenameUtils;
 
 /**
- * 文件相关操作（图片截图、压缩图片、下载文件、ZIP打包、删除文件和文件夹、获取MIME类型）
+ * 文件相关操作（图片截图、压缩图片、下载文件、ZIP打包、删除文件和文件夹、获取MIME类型、文件名操作）
  * 
  * @author zouchongjin@sina.com
  * @data 2015年11月19日
@@ -63,6 +63,17 @@ public class UtilFile {
 		MIMETYPE_MAP.put("css", "text/css");
 		MIMETYPE_MAP.put("png", "image/png");
 		MIMETYPE_MAP.put("apk", "application/vnd.android.package-archive");
+	}
+
+	/** 修改文件后缀 */
+	public static String replaceSuffix(String path, String newSuffix) {
+		if (UtilString.isNotBlank(path) && UtilString.isNotBlank(newSuffix)) {
+			String oldSuffix = FilenameUtils.getExtension(path);
+			if (UtilString.isNotBlank(oldSuffix)) {
+				return path.substring(0, path.length() - oldSuffix.length()) + newSuffix;
+			}
+		}
+		return path;
 	}
 
 	/**
