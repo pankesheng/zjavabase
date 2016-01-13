@@ -13,7 +13,7 @@ import com.zcj.util.UtilString;
 import com.zcj.util.filenameutils.FilenameUtils;
 
 /**
- * 使用条件：</br>JAR包：jacob-1.18.jar[详见pom.xml]</br>软件：Office2010
+ * 使用条件：</br>JAR包：jacob-1.18.jar[详见pom.xml]</br>软件：Office2010</br>DLL文件：jacob-1.18-x64.dll
  * 
  * @author zouchongjin@sina.com
  * @data 2016年1月13日

@@ -16,6 +16,11 @@ import com.zcj.util.UtilString;
  */
 public class PdfToSwf {
 
+	public static void main(String[] args) {
+		System.out.println(PdfToSwf.pdf2swf("C:/Program Files (x86)/SWFTools", "E:/Kuaipan/Java_Book/Java数据结构和算法.pdf",
+				"E:/Kuaipan/Java_Book/Java数据结构和算法.swf"));
+	}
+
 	private static String getFilePath(String file) {
 		String result = file.substring(0, file.lastIndexOf("/"));
 		if (file.substring(2, 3) == "/") {
@@ -103,7 +108,7 @@ public class PdfToSwf {
 				e.printStackTrace();
 			}
 			System.out.println("转换结束...");
-			return process.exitValue() == 1 ? true : false;
+			return process.exitValue() == 0;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
