@@ -38,6 +38,7 @@ public class PageBuilder {
 					}
 					b.setFieldName(f.getName());
 					b.setGrid(ct.grid());
+					b.setType(ct.type());
 					Map<String, String> kvMap = new LinkedHashMap<String, String>();
 					String[] kvArray = ct.keyValue();
 					if (kvArray != null && kvArray.length > 0) {
@@ -45,6 +46,7 @@ public class PageBuilder {
 							String[] kv2Array = kvString.split("=");
 							kvMap.put(kv2Array[0], kv2Array[1]);
 						}
+						b.setType("select");
 					}
 					b.setKeyValue(kvMap);
 					if (ct.maxlength() != 0) {
@@ -54,7 +56,6 @@ public class PageBuilder {
 					b.setMust(ct.must());
 					b.setName(ct.name());
 					b.setSearch(ct.search());
-					b.setType(ct.type());
 					columnList.add(b);
 				}
 			}

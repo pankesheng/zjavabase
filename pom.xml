@@ -58,6 +58,13 @@
 
 	<dependencies>
 
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -98,14 +105,14 @@
 			<artifactId>jodconverter-core</artifactId>
 			<version>3.0-beta-4</version>
 		</dependency>
-		
+
 		<!-- com.zcj.util.convertor.OfficeToPdf2.java -->
 		<dependency>
 			<groupId>com.hynnet</groupId>
 			<artifactId>jacob</artifactId>
 			<version>1.18</version>
 		</dependency>
-		
+
 		<!-- com.zcj.util.convertor.PdfToJpg.java -->
 		<dependency>
 			<groupId>icepdf</groupId>
@@ -114,41 +121,17 @@
 			<version>1.0</version>
 			<systemPath>${basedir}/lib/icepdf-core.jar</systemPath>
 		</dependency>
-		<!-- <dependency>
-			<groupId>icepdf</groupId>
-			<artifactId>icepdf-extra</artifactId>
-			<scope>system</scope>
-			<version>1.0</version>
-			<systemPath>${basedir}/lib/icepdf-extra.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>icepdf</groupId>
-			<artifactId>icepdf-pro-intl</artifactId>
-			<scope>system</scope>
-			<version>1.0</version>
-			<systemPath>${basedir}/lib/icepdf-pro-intl.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>icepdf</groupId>
-			<artifactId>icepdf-pro</artifactId>
-			<scope>system</scope>
-			<version>1.0</version>
-			<systemPath>${basedir}/lib/icepdf-pro.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>icepdf</groupId>
-			<artifactId>icepdf-viewer</artifactId>
-			<scope>system</scope>
-			<version>1.0</version>
-			<systemPath>${basedir}/lib/icepdf-viewer.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>icepdf</groupId>
-			<artifactId>levigo-jbig2-imageio</artifactId>
-			<scope>system</scope>
-			<version>1.0</version>
-			<systemPath>${basedir}/lib/levigo-jbig2-imageio.jar</systemPath>
-		</dependency> -->
+		<!-- <dependency> <groupId>icepdf</groupId> <artifactId>icepdf-extra</artifactId> 
+			<scope>system</scope> <version>1.0</version> <systemPath>${basedir}/lib/icepdf-extra.jar</systemPath> 
+			</dependency> <dependency> <groupId>icepdf</groupId> <artifactId>icepdf-pro-intl</artifactId> 
+			<scope>system</scope> <version>1.0</version> <systemPath>${basedir}/lib/icepdf-pro-intl.jar</systemPath> 
+			</dependency> <dependency> <groupId>icepdf</groupId> <artifactId>icepdf-pro</artifactId> 
+			<scope>system</scope> <version>1.0</version> <systemPath>${basedir}/lib/icepdf-pro.jar</systemPath> 
+			</dependency> <dependency> <groupId>icepdf</groupId> <artifactId>icepdf-viewer</artifactId> 
+			<scope>system</scope> <version>1.0</version> <systemPath>${basedir}/lib/icepdf-viewer.jar</systemPath> 
+			</dependency> <dependency> <groupId>icepdf</groupId> <artifactId>levigo-jbig2-imageio</artifactId> 
+			<scope>system</scope> <version>1.0</version> <systemPath>${basedir}/lib/levigo-jbig2-imageio.jar</systemPath> 
+			</dependency> -->
 
 		<!-- com.zcj.util.json.gson -->
 		<dependency>
@@ -327,6 +310,15 @@
 			<groupId>cn.jpush.api</groupId>
 			<artifactId>jpush-client</artifactId>
 			<version>3.2.5</version>
+		</dependency>
+
+		<!-- FastDFS -->
+		<dependency>
+			<groupId>com.csource</groupId>
+			<artifactId>fastdfs-client</artifactId>
+			<version>5.04</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/fastdfs-client-java-20141207.jar</systemPath>
 		</dependency>
 
 	</dependencies>
