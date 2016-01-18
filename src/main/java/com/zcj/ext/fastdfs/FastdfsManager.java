@@ -15,7 +15,7 @@ import org.csource.fastdfs.TrackerServer;
 import com.zcj.util.filenameutils.FilenameUtils;
 
 /**
- * FastDFS客户端
+ * FastDFS客户端</br> 依赖：fastdfs-client-java-20141207.jar</br>
  * 
  * @author zouchongjin@sina.com
  * @data 2016年1月15日
@@ -24,11 +24,10 @@ public class FastdfsManager {
 
 	private static FastdfsManager singleton;
 
-	private final String charset = "UTF-8";
-	private final int trackerHttpPort = 80;
-	private final boolean antiStealToken = false;
-	private final String secretKey = null;
-	private String[] szTrackerServers = null;
+	private static final String charset = "UTF-8";
+	private static final int trackerHttpPort = 80;
+	private static final boolean antiStealToken = false;
+	private static final String secretKey = null;
 
 	private TrackerClient tracker = null;
 	private TrackerServer trackerServer = null;
@@ -39,10 +38,10 @@ public class FastdfsManager {
 
 	}
 
-	public static synchronized FastdfsManager getInstance(String[] szTrackerServers) {
+	public static synchronized FastdfsManager getInstance(String[] szTrackerServers) throws Exception {
 		if (singleton == null) {
 			singleton = new FastdfsManager();
-			singleton.setSzTrackerServers(szTrackerServers);
+			initClientGlobal(szTrackerServers);
 		}
 		return singleton;
 	}
@@ -97,15 +96,12 @@ public class FastdfsManager {
 	}
 
 	private void init() throws Exception {
-		if (storageClient == null) {
-			initClientGlobal();
-			tracker = new TrackerClient();
-			trackerServer = tracker.getConnection();
-			storageClient = new StorageClient1(trackerServer, storageServer);
-		}
+		tracker = new TrackerClient();
+		trackerServer = tracker.getConnection();
+		storageClient = new StorageClient1(trackerServer, storageServer);
 	}
 
-	private void initClientGlobal() throws Exception {
+	private static void initClientGlobal(String[] szTrackerServers) throws Exception {
 		if (szTrackerServers == null) {
 			throw new Exception("the value of item \"tracker_server\" is invalid, the correct format is host:port");
 		}
@@ -127,14 +123,6 @@ public class FastdfsManager {
 		if (ClientGlobal.getG_anti_steal_token()) {
 			ClientGlobal.setG_secret_key(secretKey);
 		}
-	}
-
-	public String[] getSzTrackerServers() {
-		return szTrackerServers;
-	}
-
-	public void setSzTrackerServers(String[] szTrackerServers) {
-		this.szTrackerServers = szTrackerServers;
 	}
 
 }

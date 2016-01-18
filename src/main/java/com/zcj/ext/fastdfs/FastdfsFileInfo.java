@@ -7,7 +7,8 @@ import org.csource.common.NameValuePair;
 import org.csource.fastdfs.FileInfo;
 
 /**
- * FastDFS文件的信息，包括FileInfo和NameValuePair信息
+ * FastDFS文件的信息，包括FileInfo和NameValuePair信息</br>
+ * 	 依赖：fastdfs-client-java-20141207.jar</br>
  * 
  * @author zouchongjin@sina.com
  * @data 2016年1月15日

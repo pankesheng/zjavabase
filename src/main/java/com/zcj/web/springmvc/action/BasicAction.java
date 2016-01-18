@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.zcj.ext.fastdfs.FastdfsManager;
 import com.zcj.util.UtilDate;
 import com.zcj.util.UtilString;
 import com.zcj.util.filenameutils.FilenameUtils;
@@ -124,6 +125,83 @@ public class BasicAction {
 						uploadResult.getSuccess().add(
 								(new UploadSuccessResult(file.getOriginalFilename(), file.getSize(), file.getContentType(), entry.getKey(),
 										suffix, newFilename, "/" + type.replace("-", "/") + "/" + newFilename)));
+					} catch (Exception e) {
+						e.printStackTrace();
+						uploadResult.getError().add(
+								new UploadErrorResult(file.getOriginalFilename(), file.getSize(), entry.getKey(), file.getContentType(),
+										FilenameUtils.getExtension(file.getOriginalFilename()), "文件写入出错"));
+					}
+				}
+			}
+			return ServiceResult.initSuccess(uploadResult);
+		}
+	}
+
+	/**
+	 * 通过FastDFS上传附件</br> 依赖：fastdfs-client-java-20141207.jar</br>
+	 * 
+	 * @param request
+	 * @param szTrackerServers
+	 *            FastDFS服务器地址及端口</br>
+	 *            例：{"192.168.1.111:22122","192.168.1.119:22122"}
+	 * @param param
+	 *            上传附件时附带的参数
+	 * @return ServiceResult对象。
+	 *         <p>
+	 *         操作失败：s=0；d=失败原因
+	 *         <p>
+	 *         操作成功（单文件上传）：s=1；d=UploadSuccessResult对象
+	 *         <p>
+	 *         操作成功（多文件上传）：s=1；d=UploadResult对象
+	 */
+	protected ServiceResult uploadFileFastDFS(HttpServletRequest request, String[] szTrackerServers, Map<String, Object> param) {
+		if (!(request instanceof MultipartHttpServletRequest)) {
+			return ServiceResult.initError("请设置正确的上传方式");
+		}
+		MultipartHttpServletRequest rm = (MultipartHttpServletRequest) request;
+		Map<String, MultipartFile> mfs = rm.getFileMap();
+		if (mfs == null || mfs.size() == 0) {
+			return ServiceResult.initError("请确定上传的内容中包含文件域");
+		}
+
+		int fileCount = 0;
+		for (Map.Entry<String, MultipartFile> entry : mfs.entrySet()) {
+			if (!entry.getValue().isEmpty()) {
+				fileCount++;
+			}
+		}
+
+		if (fileCount == 0) {
+			return ServiceResult.initError("请选择文件后上传");
+		}
+
+		if (fileCount == 1) {
+			for (Map.Entry<String, MultipartFile> entry : mfs.entrySet()) {
+				MultipartFile file = entry.getValue();
+				if (!file.isEmpty()) {
+					String suffix = FilenameUtils.getExtension(file.getOriginalFilename());// 文件后缀
+					try {
+						String fileId = FastdfsManager.getInstance(szTrackerServers).uploadFile(file.getBytes(), suffix, param);
+						return ServiceResult.initSuccess(new UploadSuccessResult(file.getOriginalFilename(), file.getSize(), file
+								.getContentType(), entry.getKey(), suffix, FilenameUtils.getName(fileId), fileId));
+					} catch (Exception e) {
+						e.printStackTrace();
+						return ServiceResult.initError("文件上传失败");
+					}
+				}
+			}
+			return ServiceResult.initError("读取文件失败");
+		} else {
+			UploadResult uploadResult = new UploadResult();
+			for (Map.Entry<String, MultipartFile> entry : mfs.entrySet()) {
+				MultipartFile file = entry.getValue();
+				if (!file.isEmpty()) {
+					String suffix = FilenameUtils.getExtension(file.getOriginalFilename());// 文件后缀
+					try {
+						String fileId = FastdfsManager.getInstance(szTrackerServers).uploadFile(file.getBytes(), suffix, param);
+						uploadResult.getSuccess().add(
+								(new UploadSuccessResult(file.getOriginalFilename(), file.getSize(), file.getContentType(), entry.getKey(),
+										suffix, FilenameUtils.getName(fileId), fileId)));
 					} catch (Exception e) {
 						e.printStackTrace();
 						uploadResult.getError().add(
