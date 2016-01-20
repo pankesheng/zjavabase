@@ -321,6 +321,7 @@
 			<systemPath>${basedir}/lib/fastdfs-client-java-20141207.jar</systemPath>
 		</dependency>
 		
+		<!-- ActiveMQ -->
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-all</artifactId>
