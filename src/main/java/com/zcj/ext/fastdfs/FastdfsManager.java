@@ -12,6 +12,7 @@ import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerGroup;
 import org.csource.fastdfs.TrackerServer;
 
+import com.zcj.util.UtilString;
 import com.zcj.util.filenameutils.FilenameUtils;
 
 /**
@@ -46,8 +47,8 @@ public class FastdfsManager {
 		return singleton;
 	}
 
-	/** 上传文件（根据文件字节码上传） */
-	public String uploadFile(byte[] file_buff, String suffix, Map<String, Object> param) throws Exception {
+	/** 上传文件（根据文件字节码上传，并指定group） */
+	public String uploadFile(byte[] file_buff, String suffix, Map<String, Object> param, String group) throws Exception {
 		init();
 		NameValuePair nvp[] = null;
 		if (param != null && param.size() > 0) {
@@ -57,21 +58,39 @@ public class FastdfsManager {
 				nvp[i++] = new NameValuePair(entry.getKey(), String.valueOf(entry.getValue()));
 			}
 		}
-		return storageClient.upload_file1(file_buff, suffix, nvp);
+		if (UtilString.isNotBlank(group)) {
+			return storageClient.upload_file1(group, file_buff, suffix, nvp);
+		} else {
+			return storageClient.upload_file1(file_buff, suffix, nvp);
+		}
+	}
+
+	/** 上传文件（根据文件字节码上传） */
+	public String uploadFile(byte[] file_buff, String suffix, Map<String, Object> param) throws Exception {
+		return uploadFile(file_buff, suffix, param, null);
+	}
+
+	/** 上传文件（根据文件存储的绝对路径上传，并指定group） */
+	public String uploadFile(String filePath, Map<String, Object> param, String group) throws Exception {
+		init();
+		NameValuePair nvp[] = null;
+		if (param != null && param.size() > 0) {
+			nvp = new NameValuePair[param.size()];
+			int i = 0;
+			for (Map.Entry<String, Object> entry : param.entrySet()) {
+				nvp[i++] = new NameValuePair(entry.getKey(), String.valueOf(entry.getValue()));
+			}
+		}
+		if (UtilString.isNotBlank(group)) {
+			return storageClient.upload_file1(group, filePath, FilenameUtils.getExtension(filePath), nvp);
+		} else {
+			return storageClient.upload_file1(filePath, FilenameUtils.getExtension(filePath), nvp);
+		}
 	}
 
 	/** 上传文件（根据文件存储的绝对路径上传） */
 	public String uploadFile(String filePath, Map<String, Object> param) throws Exception {
-		init();
-		NameValuePair nvp[] = null;
-		if (param != null && param.size() > 0) {
-			nvp = new NameValuePair[param.size()];
-			int i = 0;
-			for (Map.Entry<String, Object> entry : param.entrySet()) {
-				nvp[i++] = new NameValuePair(entry.getKey(), String.valueOf(entry.getValue()));
-			}
-		}
-		return storageClient.upload_file1(filePath, FilenameUtils.getExtension(filePath), nvp);
+		return uploadFile(filePath, param, null);
 	}
 
 	/** 下载文件 */
