@@ -320,6 +320,12 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/fastdfs-client-java-20141207.jar</systemPath>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-all</artifactId>
+			<version>5.13.0</version>
+		</dependency>
 
 	</dependencies>
 </project>
