@@ -155,6 +155,29 @@ public class BasicAction {
 	 *         操作成功（多文件上传）：s=1；d=UploadResult对象
 	 */
 	protected ServiceResult uploadFileFastDFS(HttpServletRequest request, String[] szTrackerServers, Map<String, Object> param) {
+		return uploadFileFastDFS(request, szTrackerServers, param, null);
+	}
+
+	/**
+	 * 通过FastDFS上传附件，并指定Group</br> 依赖：fastdfs-client-java-20141207.jar</br>
+	 * 
+	 * @param request
+	 * @param szTrackerServers
+	 *            FastDFS服务器地址及端口</br>
+	 *            例：{"192.168.1.111:22122","192.168.1.119:22122"}
+	 * @param param
+	 *            上传附件时附带的参数
+	 * @param group
+	 *            FastDFS的group名
+	 * @return ServiceResult对象。
+	 *         <p>
+	 *         操作失败：s=0；d=失败原因
+	 *         <p>
+	 *         操作成功（单文件上传）：s=1；d=UploadSuccessResult对象
+	 *         <p>
+	 *         操作成功（多文件上传）：s=1；d=UploadResult对象
+	 */
+	protected ServiceResult uploadFileFastDFS(HttpServletRequest request, String[] szTrackerServers, Map<String, Object> param, String group) {
 		if (!(request instanceof MultipartHttpServletRequest)) {
 			return ServiceResult.initError("请设置正确的上传方式");
 		}
@@ -181,7 +204,7 @@ public class BasicAction {
 				if (!file.isEmpty()) {
 					String suffix = FilenameUtils.getExtension(file.getOriginalFilename());// 文件后缀
 					try {
-						String fileId = FastdfsManager.getInstance(szTrackerServers).uploadFile(file.getBytes(), suffix, param);
+						String fileId = FastdfsManager.getInstance(szTrackerServers).uploadFile(file.getBytes(), suffix, param, group);
 						return ServiceResult.initSuccess(new UploadSuccessResult(file.getOriginalFilename(), file.getSize(), file
 								.getContentType(), entry.getKey(), suffix, FilenameUtils.getName(fileId), fileId));
 					} catch (Exception e) {
@@ -198,7 +221,7 @@ public class BasicAction {
 				if (!file.isEmpty()) {
 					String suffix = FilenameUtils.getExtension(file.getOriginalFilename());// 文件后缀
 					try {
-						String fileId = FastdfsManager.getInstance(szTrackerServers).uploadFile(file.getBytes(), suffix, param);
+						String fileId = FastdfsManager.getInstance(szTrackerServers).uploadFile(file.getBytes(), suffix, param, group);
 						uploadResult.getSuccess().add(
 								(new UploadSuccessResult(file.getOriginalFilename(), file.getSize(), file.getContentType(), entry.getKey(),
 										suffix, FilenameUtils.getName(fileId), fileId)));
