@@ -129,6 +129,14 @@ public class UtilDate {
 		return cal.getTime();
 	}
 
+	/** 取得某时刻的几小时后的日期 */
+	public static Date getLaterHour(Date base, int later) {
+		Calendar cal = new GregorianCalendar();
+		cal.setTime(base);
+		cal.add(Calendar.HOUR_OF_DAY, later);
+		return cal.getTime();
+	}
+
 	/** 取得某年某月的最后一天 */
 	public static Date getLastDayOfMonth(int year, int month) {
 		Calendar cal = Calendar.getInstance();
