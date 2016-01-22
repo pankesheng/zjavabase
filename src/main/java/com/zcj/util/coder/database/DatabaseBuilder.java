@@ -33,6 +33,9 @@ public class DatabaseBuilder {
 				Boolean tNullable = true;
 				if (f.isAnnotationPresent(TableColumnType.class)) {
 					TableColumnType sqlType = f.getAnnotation(TableColumnType.class);
+					if (sqlType.exclude()) {
+						continue;
+					}
 					if (sqlType.length() != 0) {
 						tLength = sqlType.length();
 					}

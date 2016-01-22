@@ -15,6 +15,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TableColumnType {
 	
+	/** 生成SQL时排除此字段（默认false[如果字段以show_开头，也自动排除]） */
+	boolean exclude() default false;
+	
 	/** 字段类型，可取值：text。（默认空串[按JAVA类型自动生成]） */
 	String type() default "";
 

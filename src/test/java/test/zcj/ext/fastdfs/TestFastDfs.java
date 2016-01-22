@@ -1,8 +1,6 @@
 package test.zcj.ext.fastdfs;
 
 import java.io.FileOutputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
@@ -19,10 +17,7 @@ public class TestFastDfs {
 
 	@Test
 	public void testUpload() throws Exception {
-		Map<String, Object> nvp = new HashMap<String, Object>();
-		nvp.put("t1", 1);
-		nvp.put("te1", "AAA");
-		String fileId = FastdfsManager.getInstance(szTrackerServers).uploadFile(local_filename, null);
+		String fileId = FastdfsManager.getInstance(szTrackerServers).uploadFile("D:\\test.doc", null);
 		System.out.println("路径: " + fileId);
 	}
 
